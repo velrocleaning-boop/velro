@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agentskills.io/schema/v0.2.0.json",
+  "skills": [
+    {
+      "name": "Book Cleaning",
+      "type": "action",
+      "description": "Book a cleaning service in Riyadh",
+      "url": "https://velro.sa/api/skills/book",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

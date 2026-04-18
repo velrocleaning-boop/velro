@@ -1,0 +1,10 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://velro.sa/api",
+      "service-desc": "https://velro.sa/api/openapi.json",
+      "service-doc": "https://velro.sa/docs/api",
+      "status": "https://velro.sa/api/health"
+    }
+  ]
+}

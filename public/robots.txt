@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /private/
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
+Sitemap: https://velro.sa/sitemap.xml

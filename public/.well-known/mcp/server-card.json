@@ -1,0 +1,14 @@
+{
+  "serverInfo": {
+    "name": "Velro Cleaning Service Agent Server",
+    "version": "1.0.0"
+  },
+  "transport": {
+    "type": "http",
+    "url": "https://velro.sa/api/mcp"
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "issuer": "https://velro.sa",
+  "authorization_endpoint": "https://velro.sa/oauth/authorize",
+  "token_endpoint": "https://velro.sa/oauth/token",
+  "jwks_uri": "https://velro.sa/.well-known/jwks.json",
+  "grant_types_supported": ["authorization_code", "refresh_token", "client_credentials"],
+  "response_types_supported": ["code"],
+  "subject_types_supported": ["public"],
+  "id_token_signing_alg_values_supported": ["RS256"]
+}
