@@ -1,9 +1,31 @@
 import { NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone, district, service } = body;
+    const { name, email, phone, district, service, rooms, bathrooms, date, time } = body;
+
+    // Save to Supabase
+    const { error: dbError } = await supabase
+      .from('bookings')
+      .insert([
+        { 
+          name, 
+          email, 
+          phone, 
+          district, 
+          service,
+          rooms: rooms || 1,
+          bathrooms: bathrooms || 1,
+          date,
+          time
+        }
+      ]);
+
+    if (dbError) {
+      console.error('Supabase error:', dbError);
+    }
 
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -22,6 +44,8 @@ export async function POST(request: Request) {
           <p><strong>Phone:</strong> ${phone}</p>
           <p><strong>District:</strong> ${district}</p>
           <p><strong>Service:</strong> ${service}</p>
+          <p><strong>Property:</strong> ${rooms || 1} Rooms, ${bathrooms || 1} Bathrooms</p>
+          <p><strong>Schedule:</strong> ${date} at ${time}</p>
         `,
       }),
     });

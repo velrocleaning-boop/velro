@@ -21,11 +21,63 @@ export default function BookingPage() {
     name: '',
     phone: ''
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 4));
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
 
+  const handleConfirm = async () => {
+    if (!booking.name || !booking.phone) {
+      alert("Please enter your name and phone number");
+      return;
+    }
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...booking,
+          email: 'customer@example.com' // Placeholder
+        })
+      });
+      if (res.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      setStatus('error');
+    }
+  };
+
   const totalStep = 4;
+
+  if (status === 'success') {
+    return (
+      <main style={{ padding: '8rem 1rem', backgroundColor: '#f8fafc', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ backgroundColor: 'white', borderRadius: '2rem', padding: '4rem 2rem', textAlign: 'center', maxWidth: '500px', width: '100%', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
+          <div style={{ width: '80px', height: '80px', backgroundColor: '#ecfdf5', color: '#10b981', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem' }}>
+            <CheckCircle2 size={40} />
+          </div>
+          <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1rem' }}>Booking Successful!</h1>
+          <p style={{ color: '#64748b', fontSize: '1.1rem', marginBottom: '2.5rem', lineHeight: 1.6 }}>Your booking for {booking.service} has been received. Our team will contact you shortly to confirm the details.</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <a 
+              href={`https://wa.me/966500000000?text=I'd like to confirm my booking for ${booking.service}. My name is ${booking.name}.`}
+              target="_blank"
+              style={{ backgroundColor: '#10b981', color: 'white', padding: '1.25rem', borderRadius: '1rem', fontWeight: 800, textDecoration: 'none' }}
+            >
+              Chat on WhatsApp
+            </a>
+            <button onClick={() => window.location.href = '/'} style={{ border: '1px solid #e2e8f0', padding: '1.25rem', borderRadius: '1rem', fontWeight: 700, backgroundColor: 'white' }}>
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main style={{ padding: '8rem 1rem', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
@@ -117,6 +169,16 @@ export default function BookingPage() {
                   </select>
                 </div>
               </div>
+              <div style={{ marginTop: '1.5rem' }}>
+                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.75rem' }}>District</label>
+                  <input 
+                    type="text" 
+                    placeholder="Enter neighborhood (e.g. Al Olaya)"
+                    style={{ width: '100%', padding: '1rem', borderRadius: '1rem', border: '1px solid #e2e8f0' }} 
+                    value={booking.district}
+                    onChange={(e) => setBooking({...booking, district: e.target.value})}
+                  />
+              </div>
             </div>
           )}
 
@@ -193,12 +255,13 @@ export default function BookingPage() {
                 Continue <ChevronRight size={20} />
               </button>
             ) : (
-              <a 
-                href={`https://wa.me/966500000000?text=I'd like to book a ${booking.service} for ${booking.rooms} rooms on ${booking.date} at ${booking.time}. My name is ${booking.name}.`} 
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#10b981', color: 'white', padding: '1rem 2.5rem', borderRadius: '1rem', fontWeight: 700, cursor: 'pointer', border: 'none', textDecoration: 'none' }}
+              <button 
+                onClick={handleConfirm}
+                disabled={status === 'loading'}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#10b981', color: 'white', padding: '1rem 2.5rem', borderRadius: '1rem', fontWeight: 700, cursor: 'pointer', border: 'none' }}
               >
-                Confirm via CleanBot AI <CheckCircle2 size={20} />
-              </a>
+                {status === 'loading' ? 'Confirming...' : 'Confirm Booking'} <CheckCircle2 size={20} />
+              </button>
             )}
           </div>
         </div>

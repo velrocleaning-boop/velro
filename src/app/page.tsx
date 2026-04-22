@@ -50,9 +50,42 @@ const row2Reviews = [
   { name: "Hessa Al-Ghamdi", location: "Al Olaya", avatar: "https://randomuser.me/api/portraits/women/12.jpg", text: "The best cleaning service I have used in Riyadh. Finally a reliable company that handles delicate dusting and tough bathroom grime with equal care." },
 ];
 
-
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    district: '',
+    service: 'Standard Cleaning'
+  });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.district) {
+      alert("Please select a neighborhood");
+      return;
+    }
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          email: 'customer@example.com' // Placeholder as it's not in the simple hero form
+        })
+      });
+      if (res.ok) {
+        setStatus('success');
+        setFormData({ name: '', phone: '', district: '', service: 'Standard Cleaning' });
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      setStatus('error');
+    }
+  };
 
   return (
     <>
@@ -99,55 +132,98 @@ export default function HomePage() {
 
           <div className="hero-form">
             <div style={{ margin: '-2.5rem -2.5rem 2rem -2.5rem' }}>
-              <img src="/service_1.png" alt="Professional cleaner" style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '1.5rem 1.5rem 0 0' }} />
+              <img src="/service_1.png" alt="Professional cleaner" style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '1.5rem 1.5rem 0 0' }} />
             </div>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Book in 60 seconds</h2>
-            <p className="form-desc" style={{ marginBottom: '1.5rem', fontWeight: 500 }}>See your exact pricing instantly.</p>
-            <form>
-              <div className="form-group">
-                <label style={{ fontWeight: 600 }}>Where in Riyadh?</label>
-                <div style={{ position: 'relative' }}>
-                  <MapPin size={22} color="#9ca3af" style={{ position: 'absolute', left: '1rem', top: '1.1rem' }} />
-                  <select className="form-input" style={{ paddingLeft: '3rem', fontSize: '1.05rem', height: '3.5rem' }} defaultValue="">
-                    <option value="" disabled>Select your neighborhood...</option>
-                    <option value="olaya">Al Olaya (العليا)</option>
-                    <option value="malqa">Al Malqa (الملقا)</option>
-                    <option value="hittin">Hittin (حطين)</option>
-                    <option value="sulaimaniyah">As Sulimaniyah (السليمانية)</option>
-                    <option value="yasmin">Al Yasmin (الياسمين)</option>
-                    <option value="narjis">An Narjis (النرجس)</option>
-                    <option value="rabi">Ar Rabi (الربيع)</option>
-                    <option value="sahafah">Al Sahafah (الصحافة)</option>
-                    <option value="aqiq">Al Aqiq (العقيق)</option>
-                    <option value="malaz">Al Malaz (الملز)</option>
-                    <option value="murabba">Al Murabba (المربع)</option>
-                    <option value="other">Other District in Riyadh</option>
-                  </select>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Book in 60 seconds</h2>
+            <p className="form-desc" style={{ marginBottom: '1.5rem', fontWeight: 500 }}>Trusted help in Riyadh.</p>
+            
+            {status === 'success' ? (
+              <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                <div style={{ width: '64px', height: '64px', backgroundColor: '#ecfdf5', color: '#10b981', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
+                  <CheckCircle2 size={32} />
                 </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>Booking Received!</h3>
+                <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>Our team will contact you on WhatsApp shortly.</p>
+                <button onClick={() => setStatus('idle')} className="btn-secondary" style={{ width: '100%' }}>Book Another</button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className="form-group" style={{ marginBottom: '1rem' }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.875rem' }}>Name</label>
+                  <input 
+                    type="text" 
+                    required 
+                    placeholder="Enter your name" 
+                    className="form-input" 
+                    style={{ height: '3rem', fontSize: '0.95rem' }}
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
+                </div>
 
-              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.25rem' }}>
-                <button className="btn-secondary" type="button" style={{ flex: 1, padding: '1rem', fontSize: '0.9rem', fontWeight: 700, border: '2px solid var(--primary)', color: 'var(--primary)', borderRadius: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  Pricing
-                </button>
-                <Link 
-                  href="https://wa.me/966500000000?text=Hello Velro, I'd like to book a cleaning service in Riyadh." 
-                  target="_blank"
+                <div className="form-group" style={{ marginBottom: '1rem' }}>
+                  <label style={{ fontWeight: 600, fontSize: '0.875rem' }}>Phone</label>
+                  <input 
+                    type="tel" 
+                    required 
+                    placeholder="+966" 
+                    className="form-input" 
+                    style={{ height: '3rem', fontSize: '0.95rem' }}
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <label style={{ fontWeight: 600, fontSize: '0.875rem' }}>District</label>
+                    <select 
+                      className="form-input" 
+                      style={{ height: '3rem', fontSize: '0.95rem', padding: '0 0.75rem' }} 
+                      value={formData.district}
+                      onChange={(e) => setFormData({...formData, district: e.target.value})}
+                      required
+                    >
+                      <option value="" disabled>Select...</option>
+                      <option value="olaya">Al Olaya</option>
+                      <option value="malqa">Al Malqa</option>
+                      <option value="hittin">Hittin</option>
+                      <option value="yasmin">Al Yasmin</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <label style={{ fontWeight: 600, fontSize: '0.875rem' }}>Service</label>
+                    <select 
+                      className="form-input" 
+                      style={{ height: '3rem', fontSize: '0.95rem', padding: '0 0.75rem' }} 
+                      value={formData.service}
+                      onChange={(e) => setFormData({...formData, service: e.target.value})}
+                    >
+                      <option value="Standard Cleaning">Standard</option>
+                      <option value="Deep Cleaning">Deep</option>
+                      <option value="Move-in/out">Move-in</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button 
                   className="btn-primary" 
-                  style={{ flex: 1, padding: '1rem', fontSize: '0.9rem', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', backgroundColor: '#25D366', borderColor: '#25D366', color: 'white', textDecoration: 'none', borderRadius: '0.75rem' }}
+                  type="submit" 
+                  disabled={status === 'loading'}
+                  style={{ width: '100%', height: '3.5rem', fontSize: '1.05rem', fontWeight: 800, backgroundColor: 'var(--primary)', color: 'white', borderRadius: '0.75rem', marginTop: '0.5rem' }}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-                  </svg>
-                  WhatsApp
-                </Link>
-              </div>
-              <div style={{ textAlign: 'center', marginTop: '1.25rem', fontSize: '0.9rem', color: '#059669', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', backgroundColor: '#ecfdf5', padding: '0.5rem', borderRadius: '0.5rem' }}>
-                 <Clock size={18} /> ⚡ Next available cleaner in 2 hours
-              </div>
-            </form>
+                  {status === 'loading' ? 'Booking...' : 'Book Your Cleaning Now'}
+                </button>
+                
+                <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.85rem', color: '#059669', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
+                   <Clock size={16} /> ⚡ Next available cleaner in 2 hours
+                </div>
+              </form>
+            )}
           </div>
         </section>
+
 
         {/* TRUST SECTION */}
         <section className="trust-brands">
@@ -393,7 +469,7 @@ export default function HomePage() {
           <div className="container">
             <h2>Ready for a cleaner home?</h2>
             <p>Join thousands of happy homeowners in Riyadh and reclaim your weekends. Book your first cleaning in 60 seconds.</p>
-            <Link href="#" className="btn">Book Your Cleaner Now</Link>
+            <Link href="/book" className="btn">Book Your Cleaner Now</Link>
           </div>
         </section>
 

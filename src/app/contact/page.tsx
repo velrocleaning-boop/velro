@@ -6,10 +6,25 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-    setTimeout(() => setStatus('sent'), 1500);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setStatus('sent');
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setStatus('idle');
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus('idle');
+    }
   };
 
   return (
