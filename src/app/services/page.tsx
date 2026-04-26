@@ -5,6 +5,11 @@ import {
 } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
+const WA_NUMBER = '966594847866';
+
+function waLink(message: string) {
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+}
 export const metadata: Metadata = {
   title: "Cleaning Services in Riyadh | Velro — Home & Villa Cleaning",
   description:
@@ -30,7 +35,7 @@ export const metadata: Metadata = {
 
 const residentialServices = [
   {
-    image: "/service_1.png",
+    image: "/services/sweeping-dusting.webp",
     title: "Standard House Cleaning",
     badge: "Most Popular",
     badgeColor: "#253bbd",
@@ -40,7 +45,7 @@ const residentialServices = [
     price: "From 50 SAR/hr",
   },
   {
-    image: "/service_1.png",
+    image: "/services/bathroom-cleaning.webp",
     title: "Deep Cleaning",
     badge: "Best Value",
     badgeColor: "#059669",
@@ -50,7 +55,7 @@ const residentialServices = [
     price: "From 80 SAR/hr",
   },
   {
-    image: "/service_1.png",
+    image: "/services/floor-mopping.webp",
     title: "End of Lease Cleaning",
     badge: null,
     badgeColor: null,
@@ -60,7 +65,7 @@ const residentialServices = [
     price: "Fixed precise quote",
   },
   {
-    image: "/service_1.png",
+    image: "/services/sofa-cleaning.webp",
     title: "Upholstery & Sofa Cleaning",
     badge: null,
     badgeColor: null,
@@ -70,7 +75,7 @@ const residentialServices = [
     price: "From 120 SAR/piece",
   },
   {
-    image: "/service_1.png",
+    image: "/services/laundry-cleaning.webp",
     title: "Carpet & Rug Cleaning",
     badge: null,
     badgeColor: null,
@@ -80,7 +85,7 @@ const residentialServices = [
     price: "From 90 SAR/piece",
   },
   {
-    image: "/service_1.png",
+    image: "/services/kitchen-cleaning.webp",
     title: "Kitchen Deep Clean",
     badge: null,
     badgeColor: null,
@@ -93,21 +98,21 @@ const residentialServices = [
 
 const commercialServices = [
   {
-    image: "/service_1.png",
+    image: "/services/utensils-cleaning.webp",
     title: "Office Cleaning",
     description:
       "Reliable daily, weekly, or monthly office cleaning across Riyadh. Keep your workspace spotless, professional, and healthy for your team.",
     includes: ["Workstation cleaning", "Common area maintenance", "Restroom sanitisation", "Bin collection"],
   },
   {
-    image: "/service_1.png",
+    image: "/services/kitchen-cleaning.webp",
     title: "Restaurant & Café Cleaning",
     description:
       "Commercial kitchen deep cleans meeting strict Saudi food safety standards. Keep grease traps, hoods, equipment, and floors sanitized.",
     includes: ["Commercial kitchen equipment", "Grease trap cleaning", "Food prep area sanitisation", "Floors & drains"],
   },
   {
-    image: "/service_1.png",
+    image: "/services/balcony-cleaning.webp",
     title: "Villa & Compound Cleaning",
     description:
       "Full-property cleaning for villas and gated compounds — including multiple floors, majlis areas, exterior spaces, and maid quarters.",
@@ -216,9 +221,14 @@ export default function ServicesPage() {
                   </ul>
                   <div className="service-card-footer">
                     <span className="service-card-price">{price}</span>
-                    <Link href="/" className="service-card-cta">
+                    <a
+                      href={waLink(`Hi! I would like to get a quote for "${title}". Can you help me?`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="service-card-cta"
+                    >
                       Get A Quote <ArrowRight size={15} />
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </article>
@@ -259,9 +269,15 @@ export default function ServicesPage() {
                     ))}
                   </ul>
                   <div className="service-card-footer" style={{ borderTop: 'none', paddingTop: 0 }}>
-                    <Link href="/" className="service-card-cta" style={{ width: '100%', justifyContent: 'center' }}>
+                    <a
+                      href={waLink(`Hi! I would like to get a quote for commercial "${title}". Can you help me?`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="service-card-cta"
+                      style={{ width: '100%', justifyContent: 'center' }}
+                    >
                       Get A Quote <ArrowRight size={15} />
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </article>
@@ -308,7 +324,7 @@ export default function ServicesPage() {
             {topRiyadhDistricts.map(district => (
               <div key={district} className="area-card">
                 <div className="area-card-img-wrap">
-                 <img src="/service_1.png" alt={district} />
+                 <img src="/services/sweeping-dusting.webp" alt={district} />
                 </div>
                 <div className="area-card-content">
                   <h3>{district}</h3>

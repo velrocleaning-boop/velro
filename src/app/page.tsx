@@ -24,12 +24,14 @@ const faqs = [
 ];
 
 const servicesList = [
-  { name: "Bathroom cleaning", img: "/service_1.png" },
-  { name: "Kitchen cleaning", img: "/service_1.png" },
-  { name: "Dusting", img: "/service_1.png" },
-  { name: "Floor Mopping", img: "/service_1.png" },
-  { name: "Deep Cleaning", img: "/service_1.png" },
-  { name: "Window Washing", img: "/service_1.png" }
+  { name: "Bathroom Cleaning", img: "/services/bathroom-cleaning.webp" },
+  { name: "Kitchen Cleaning", img: "/services/kitchen-cleaning.webp" },
+  { name: "Dusting & Sweeping", img: "/services/sweeping-dusting.webp" },
+  { name: "Floor Mopping", img: "/services/floor-mopping.webp" },
+  { name: "Sofa & Upholstery", img: "/services/sofa-cleaning.webp" },
+  { name: "Balcony Cleaning", img: "/services/balcony-cleaning.webp" },
+  { name: "Laundry Service", img: "/services/laundry-cleaning.webp" },
+  { name: "Utensils & Dishes", img: "/services/utensils-cleaning.webp" }
 ];
 
 const row1Reviews = [
@@ -132,7 +134,7 @@ export default function HomePage() {
 
           <div className="hero-form">
             <div style={{ margin: '-2.5rem -2.5rem 2rem -2.5rem' }}>
-              <img src="/service_1.png" alt="Professional cleaner" style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '1.5rem 1.5rem 0 0' }} />
+              <img src="/services/floor-mopping.webp" alt="Professional cleaner" style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '1.5rem 1.5rem 0 0' }} />
             </div>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Book in 60 seconds</h2>
             <p className="form-desc" style={{ marginBottom: '1.5rem', fontWeight: 500 }}>Trusted help in Riyadh.</p>
@@ -314,7 +316,7 @@ export default function HomePage() {
 
                 {/* Center Image */}
                 <div className="features-center">
-                  <img className="bg-img" src="/service_1.png" alt="Velro cleaning" />
+                  <img className="bg-img" src="/services/sofa-cleaning.webp" alt="Velro cleaning" />
                   <img className="logo-img" src="/logo.png" alt="Velro Logo" />
                 </div>
 
@@ -367,23 +369,30 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SERVICES IMAGES */}
-        <section id="services" style={{ padding: '6rem 0', backgroundColor: 'var(--white)' }}>
+        {/* SERVICES MARQUEE */}
+        <section id="services" className="services-marquee-section">
           <div className="container" style={{ textAlign: 'center' }}>
-            <h2 style={{ fontSize: '2.75rem', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
-              Book trusted cleaning help
+            <div className="section-eyebrow">What We Clean</div>
+            <h2 className="services-marquee-title">
+              Book trusted <span>cleaning help</span>
             </h2>
-            <p style={{ color: 'var(--text-muted)', fontSize: '1.25rem', fontWeight: 600, marginBottom: '3.5rem' }}>
-              From deep cleans to daily upkeep, Velro's got you covered
+            <p className="services-marquee-subtitle">
+              From deep cleans to daily upkeep, Velro&apos;s got you covered
             </p>
           </div>
 
-          <div className="marquee-wrapper" style={{ marginTop: '1rem', overflow: 'hidden' }}>
-            <div className="marquee-row left" style={{ animationDuration: '45s', alignItems: 'flex-start' }}>
-              {[...servicesList, ...servicesList, ...servicesList].map((service, i) => (
-                <div key={i} style={{ width: '320px', flexShrink: 0, margin: '0 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <img src={service.img} alt={service.name} style={{ width: '100%', height: '360px', objectFit: 'cover', borderRadius: '1.5rem', marginBottom: '1.25rem', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }} />
-                  <h3 style={{ fontSize: '1.35rem', fontWeight: 700, color: 'var(--text-main)' }}>{service.name}</h3>
+          <div className="services-marquee-track-wrapper">
+            <div className="services-marquee-track">
+              {/* Two identical copies for seamless infinite loop */}
+              {[...servicesList, ...servicesList].map((service, i) => (
+                <div key={i} className="services-marquee-card">
+                  <div className="services-marquee-img-wrap">
+                    <img src={service.img} alt={service.name} className="services-marquee-img" />
+                    <div className="services-marquee-overlay">
+                      <span className="services-marquee-label">{service.name}</span>
+                    </div>
+                  </div>
+                  <h3 className="services-marquee-name">{service.name}</h3>
                 </div>
               ))}
             </div>

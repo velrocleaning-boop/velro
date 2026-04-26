@@ -1955,6 +1955,144 @@ button {
   margin: 0.75rem auto 0;
 }
 
+/* ── SERVICES MARQUEE SECTION ── */
+.services-marquee-section {
+  padding: 6rem 0 5rem;
+  background: var(--bg-color);
+  overflow: hidden;
+}
+
+.services-marquee-title {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.services-marquee-title span {
+  background: linear-gradient(90deg, var(--primary), #6d7ef0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.services-marquee-subtitle {
+  color: var(--text-muted);
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 3.5rem;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Track wrapper — clips overflow + adds soft fade edges */
+.services-marquee-track-wrapper {
+  overflow: hidden;
+  width: 100%;
+  /* Soft fade left + right */
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+/* The scrolling flex row — 2 identical copies for seamless loop */
+.services-marquee-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  /* scroll exactly half = one full set of cards */
+  animation: services-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover for accessibility */
+.services-marquee-track-wrapper:hover .services-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes services-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Individual card */
+.services-marquee-card {
+  flex-shrink: 0;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Image container — fixed aspect ratio */
+.services-marquee-img-wrap {
+  position: relative;
+  width: 280px;
+  height: 370px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.services-marquee-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.services-marquee-card:hover .services-marquee-img {
+  transform: scale(1.07);
+}
+
+/* Gradient overlay + label at bottom */
+.services-marquee-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(13, 27, 110, 0.75) 0%,
+    rgba(13, 27, 110, 0.25) 45%,
+    transparent 70%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 1.25rem 1.25rem;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.services-marquee-card:hover .services-marquee-overlay {
+  opacity: 1;
+}
+
+.services-marquee-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.3px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+}
+
+/* Service name below card */
+.services-marquee-name {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
 /* ── SERVICES IMG GRID ── */
 .services-section {
   padding: 6rem 0;
@@ -2466,3 +2604,421 @@ button {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ================================================================
+   PRICING PAGE
+   ================================================================ */
+
+.pricing-page {
+  background: #f8faff;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.pricing-hero {
+  position: relative;
+  padding: 10rem 0 5rem;
+  overflow: hidden;
+}
+
+.pricing-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0d1b6e 0%, #253bbd 55%, #4a5fe8 100%);
+  z-index: 0;
+}
+
+.pricing-hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+}
+
+.pricing-hero-bg::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: #f8faff;
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+.pricing-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+}
+
+.pricing-hero-title {
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0.75rem 0 1.25rem;
+  color: white;
+}
+
+.pricing-hero-title span {
+  background: linear-gradient(90deg, #a5b4fc, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pricing-hero-sub {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.82);
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+.pricing-trust-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.pricing-trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: white;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+/* ── BODY ── */
+.pricing-body {
+  padding: 4rem 0 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+/* ── CATEGORY ── */
+.pricing-category-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.pricing-cat-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.pricing-cat-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+/* ── PLAN CARDS ROW ── */
+.pricing-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .pricing-cards-row {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+  }
+}
+
+/* ── SINGLE PLAN CARD ── */
+.pricing-card {
+  background: white;
+  border: 1.5px solid #e5e9f5;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.pricing-card-content {
+  padding: 1.5rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.pricing-card-img-wrap {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card-img-wrap--addon {
+  height: 140px;
+}
+
+.pricing-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.pricing-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(37, 59, 189, 0.3) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pricing-card:hover .pricing-card-img {
+  transform: scale(1.08);
+}
+
+.pricing-card:hover .pricing-card-img-overlay {
+  opacity: 1;
+}
+.pricing-card:hover {
+  box-shadow: 0 16px 40px rgba(37,59,189,0.12);
+  transform: translateY(-4px);
+}
+
+.pricing-card--featured {
+  border-color: var(--primary);
+  background: linear-gradient(160deg, #f5f7ff 0%, #ffffff 100%);
+  box-shadow: 0 8px 32px rgba(37,59,189,0.13);
+}
+
+.pricing-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--primary);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.pricing-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pricing-card-size {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.pricing-card-price {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+
+.pricing-card-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+}
+
+.pricing-card-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.pricing-card-features li svg {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* ── WhatsApp Button ── */
+.pricing-wa-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 2px solid #25D366;
+  color: #15803d;
+  background: #f0fdf4;
+  margin-top: auto;
+}
+
+.pricing-wa-btn:hover {
+  background: #25D366;
+  color: white;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  transform: translateY(-1px);
+}
+
+.pricing-wa-btn--primary {
+  background: #25D366;
+  color: white;
+  border-color: #25D366;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+}
+
+.pricing-wa-btn--primary:hover {
+  background: #1db954;
+  border-color: #1db954;
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.4);
+}
+
+
+/* ── INFO ALERT ── */
+.pricing-info-alert {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding: 1.75rem 2rem;
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+  border-radius: 1.25rem;
+}
+
+.pricing-info-alert h3 {
+  font-weight: 700;
+  color: #9a3412;
+  margin-bottom: 0.4rem;
+  font-size: 1.05rem;
+}
+
+.pricing-info-alert p {
+  color: #c2410c;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.pricing-info-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #25D366;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.pricing-info-wa:hover {
+  background: #1db954;
+  transform: translateY(-1px);
+}
+
+/* ── BOTTOM CTA ── */
+.pricing-bottom-cta {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 2rem;
+  border: 1.5px solid #e5e9f5;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pricing-cta-wa-icon-wrap {
+  width: 72px;
+  height: 72px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+}
+
+.pricing-bottom-cta h2 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.pricing-bottom-cta > p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+  max-width: 440px;
+}
+
+.pricing-cta-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  transition: all 0.2s ease;
+  margin-bottom: 1.25rem;
+}
+
+.pricing-cta-wa:hover {
+  background: #1db954;
+  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.45);
+  transform: translateY(-2px);
+}
+
+.pricing-cta-number {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0 !important;
+}
+
