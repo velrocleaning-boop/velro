@@ -1,10 +1,10 @@
 import { supabaseAdmin } from '@/lib/supabase-admin';
 import { notFound } from 'next/navigation';
-import InvoiceEditor from './InvoiceEditor';
+import InvoiceEditor from '../invoice/InvoiceEditor';
 
 export const revalidate = 0;
 
-export default async function InvoicePage({ params }: { params: Promise<{ id: string }> }) {
+export default async function QuotePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   const { data: booking, error } = await supabaseAdmin
@@ -15,5 +15,5 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
 
   if (error || !booking) return notFound();
 
-  return <InvoiceEditor booking={booking} type="invoice" />;
+  return <InvoiceEditor booking={booking} type="quote" />;
 }

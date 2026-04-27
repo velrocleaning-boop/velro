@@ -3,7 +3,7 @@ import BookingStatusSelect from '@/components/BookingStatusSelect';
 import DeleteRecordButton from '@/components/DeleteRecordButton';
 import EditBookingModal from '@/components/EditBookingModal';
 import BookingsFilter from '@/components/BookingsFilter';
-import { MessageCircle, FileText } from 'lucide-react';
+import { MessageCircle, FileText, FilePlus } from 'lucide-react';
 import Link from 'next/link';
 
 export const revalidate = 0;
@@ -81,6 +81,9 @@ export default async function BookingsPage({ searchParams }: { searchParams: Pro
                     <EditBookingModal booking={booking} />
                     <Link href={`/admin/bookings/${booking.id}/invoice`} style={{ color: '#10b981', display: 'flex', alignItems: 'center' }} title="Invoice">
                       <FileText size={16} />
+                    </Link>
+                    <Link href={`/admin/bookings/${booking.id}/quote`} style={{ color: '#6366f1', display: 'flex', alignItems: 'center' }} title="Quotation">
+                      <FilePlus size={16} />
                     </Link>
                     <DeleteRecordButton id={booking.id} type="bookings" />
                   </div>
