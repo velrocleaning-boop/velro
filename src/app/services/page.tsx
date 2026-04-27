@@ -3,7 +3,7 @@ import Link from "next/link";
 import {
   Sparkles, CheckCircle2, ArrowRight, MapPin, Star, ShieldCheck, Leaf, Clock
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 
 const WA_NUMBER = '966594847866';
 
@@ -141,7 +141,7 @@ export default function ServicesPage() {
       <section className="services-hero">
         <div className="services-hero-bg" aria-hidden="true" />
         <div className="container services-hero-content" style={{ paddingTop: '2rem' }}>
-          <Breadcrumbs color="#94a3b8" />
+
           <div className="services-hero-badge">
             <MapPin size={14} />Riyadh, Saudi Arabia
           </div>
