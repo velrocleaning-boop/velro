@@ -1,0 +1,248 @@
+@media (prefers-reduced-motion: reduce) { 
+  * { 
+    animation: none !important; 
+    transition: none !important; 
+  } 
+}
+
+/* Observer utility */
+.obs-hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.obs-show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 1. Hero Section */
+.hero-h1-animate {
+  animation: fadeInUp 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.badge-pulse {
+  animation: pulseGlow 3s infinite;
+}
+
+.checklist-item {
+  opacity: 0;
+  transform: translateX(-30px);
+  visibility: hidden;
+}
+.checklist-item.obs-show {
+  visibility: visible;
+  animation: slideInLeft 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.avatar-row {
+  opacity: 0;
+  transform: scale(0.95);
+  visibility: hidden;
+}
+.avatar-row.obs-show {
+  visibility: visible;
+  animation: fadeInScale 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.7s;
+}
+
+/* Floating circles */
+.floating-circle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(59, 79, 216, 0.12); /* #3b4fd8 at 12% */
+  pointer-events: none;
+  animation: floatUp 15s linear infinite;
+  z-index: 0;
+}
+
+/* 2. Trusted Brands */
+.brands-wrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  visibility: hidden;
+}
+.brands-wrapper.obs-show {
+  visibility: visible;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* 3. How It Works */
+.step-card {
+  opacity: 0;
+  transform: translateY(30px);
+  visibility: hidden;
+}
+.step-card.obs-show {
+  visibility: visible;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.step-number {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.step-card:hover .step-number {
+  transform: scale(1.08);
+}
+
+/* 4. Why Choose Us */
+.feature-item-custom {
+  opacity: 0;
+  transform: translateY(20px);
+  visibility: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feature-item-custom.obs-show {
+  visibility: visible;
+  animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.feature-item-custom:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 10px 25px rgba(59, 79, 216, 0.15) !important;
+}
+
+/* 5. What We Clean */
+.services-marquee-card {
+  opacity: 0;
+  transform: scale(0.96);
+  visibility: hidden;
+  transition: transform 0.3s ease;
+}
+.services-marquee-card.obs-show {
+  visibility: visible;
+  animation: fadeInScale 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.services-marquee-img-wrap {
+  overflow: hidden;
+}
+.services-marquee-img {
+  transition: transform 0.4s ease;
+}
+.services-marquee-card:hover .services-marquee-img {
+  transform: scale(1.04);
+}
+
+/* 6. Testimonials */
+.review-card {
+  opacity: 0;
+  visibility: hidden;
+  transition: border-color 0.3s ease;
+  border: 1px solid transparent;
+}
+.review-card.obs-show {
+  visibility: visible;
+  animation: fadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.review-card:hover {
+  border-color: rgba(59, 79, 216, 0.4);
+}
+
+/* 7. FAQ */
+.faq-header {
+  opacity: 0;
+  transform: translateY(20px);
+  visibility: hidden;
+}
+.faq-header.obs-show {
+  visibility: visible;
+  animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.faq-answer.open {
+  grid-template-rows: 1fr;
+}
+.faq-answer-inner {
+  overflow: hidden;
+}
+
+/* 8. Final CTA */
+.cta-header {
+  opacity: 0;
+  transform: translateY(20px);
+  visibility: hidden;
+}
+.cta-header.obs-show {
+  visibility: visible;
+  animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.cta-shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+.cta-shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shimmerSweep 4s infinite;
+}
+
+/* KEYFRAMES */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 79, 216, 0); }
+  50% { box-shadow: 0 0 15px 5px rgba(59, 79, 216, 0.25); }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+}
+
+@keyframes shimmerSweep {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

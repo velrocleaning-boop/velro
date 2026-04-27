@@ -148,10 +148,11 @@ button {
 
 /* Hero Section */
 .hero {
-  padding: 9rem 0 7rem;
+  padding: 8rem 0 4rem;
   display: flex;
   align-items: center;
-  gap: 5rem;
+  gap: 3rem;
+  width: 100%;
 }
 
 .hero-content {
@@ -1003,11 +1004,26 @@ button {
 }
 
 @media (max-width: 768px) {
+  /* Clean mobile header — full-width sticky bar, no pill */
   .custom-header {
-    margin: 1.5rem 0 0 0;
-    padding: 0 1.25rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0 20px;
+    height: 64px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(59,79,216,0.1);
+    display: flex;
+    align-items: center;
+    z-index: 200;
+    box-shadow: 0 2px 16px rgba(26,31,94,0.07);
   }
 
+  /* Hide the pill, show a plain flex row instead */
   .navbar-pill {
     background: transparent !important;
     padding: 0 !important;
@@ -1016,92 +1032,57 @@ button {
     border: none !important;
     width: 100%;
     justify-content: space-between !important;
-    align-items: center;
+    align-items: center !important;
     flex-wrap: nowrap !important;
   }
 
   .navbar-pill .logo-container {
-    width: auto !important;
-    order: 0 !important;
-    display: flex;
-    justify-content: flex-start !important;
     margin: 0 !important;
+    order: 0;
   }
 
   .navbar-pill .logo-container img {
-    height: 28px !important; /* Proper matching height for mobile */
+    height: 30px !important;
   }
 
   .nav-group {
     display: none !important;
   }
 
-  .mobile-menu-btn {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    background-color: var(--primary);
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
+  /* Push page content below fixed header */
+  body {
+    padding-top: 64px;
   }
 
-  .mobile-menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 999;
-    backdrop-filter: blur(2px);
-    animation: fadeIn 0.2s ease-out forwards;
+  /* Hero mobile font fixes */
+  .hero-title {
+    font-size: 2.1rem !important;
+    line-height: 1.2 !important;
   }
 
-  .mobile-menu-dropdown {
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: auto;
-    width: 80%;
-    max-width: 300px;
-    background: white;
-    flex-direction: column;
-    padding: 5rem 1.5rem 2rem 1.5rem;
-    border-radius: 1.5rem 0 0 1.5rem;
-    box-shadow: -10px 0 40px rgba(0,0,0,0.15);
-    z-index: 1000;
-    animation: slideRightIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  .hero {
+    flex-direction: column !important;
+    gap: 2rem !important;
+    padding: 2rem 0 2rem !important;
+    align-items: flex-start !important;
   }
 
-  .mobile-menu-dropdown a {
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--text-main);
-    padding: 1.15rem 0;
-    border-bottom: 1px solid #f3f4f6;
-    text-decoration: none;
-    text-align: left;
-  }
-  
-  .mobile-menu-dropdown a:nth-last-of-type(1) {
-    border-bottom: none;
+  .hero-subtitle {
+    font-size: 1rem !important;
   }
 
-  @keyframes slideRightIn {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
+  section[style*="minHeight: \"100vh\""],
+  section[style*='minHeight: "100vh"'] {
+    min-height: unset !important;
+    padding-bottom: 2rem;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .premium-booking-card {
+    flex: unset !important;
+    width: 100% !important;
   }
 }
+
 
 /* ============================================================
    ABOUT PAGE — Premium Styles
@@ -3022,3 +3003,114 @@ button {
   margin: 0 !important;
 }
 
+
+/* Premium Bright & Clean Form Styling */
+.premium-booking-card {
+  background: #ffffff;
+  padding: 1.5rem 2rem 2rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 28px rgba(59,79,216,0.10), 0 1px 4px rgba(0,0,0,0.04);
+  flex: 0.8;
+  color: var(--text-main);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #dde0ff;
+  z-index: 1;
+}
+.premium-booking-card h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+.dark-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.dark-form-group {
+  display: flex;
+  flex-direction: column;
+}
+.dark-form-group.full-width {
+  grid-column: 1 / -1;
+}
+.dark-form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #3b4fd8;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.dark-form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #fafbff;
+  border: 1px solid #dde0ff;
+  border-radius: 10px;
+  color: #0f172a;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.dark-form-input:focus {
+  border-color: #3b4fd8;
+  outline: none;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59,79,216,0.12);
+}
+.dark-form-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+.dark-form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23475569%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.25rem top 50%;
+  background-size: 0.65rem auto;
+}
+.dark-form-select option {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+.btn-success-large {
+  width: 100%;
+  padding: 12px;
+  background-color: #3b4fd8;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 12px;
+  margin-top: 0.5rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.btn-success-large:hover {
+  transform: scale(1.02);
+  background-color: #4f63e8;
+}
+.btn-success-large::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  animation: shimmerSweep 3s infinite;
+}
+@media (max-width: 768px) {
+  .dark-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

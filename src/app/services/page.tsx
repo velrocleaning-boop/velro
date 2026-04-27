@@ -37,62 +37,62 @@ const residentialServices = [
   {
     image: "/services/sweeping-dusting.webp",
     title: "Standard House Cleaning",
+    slug: "standard-cleaning",
     badge: "Most Popular",
     badgeColor: "#253bbd",
     description:
       "A thorough top-to-bottom clean of all living areas, bedrooms, bathrooms, and kitchen. Perfect for weekly or fortnightly maintenance.",
     includes: ["Dusting all surfaces", "Mopping & vacuuming floors", "Bathroom scrubbing", "Kitchen wipe-down"],
-    price: "From 50 SAR/hr",
   },
   {
     image: "/services/bathroom-cleaning.webp",
     title: "Deep Cleaning",
+    slug: "deep-cleaning",
     badge: "Best Value",
     badgeColor: "#059669",
     description:
       "A comprehensive, intensive clean designed to reach every corner. Ideal for seasonal cleans, ensuring a healthier and more pristine home.",
     includes: ["Inside oven & fridge", "Grout & tile scrubbing", "Skirting boards", "Cabinet interiors"],
-    price: "From 80 SAR/hr",
   },
   {
     image: "/services/floor-mopping.webp",
     title: "End of Lease Cleaning",
+    slug: "move-in-out",
     badge: null,
     badgeColor: null,
     description:
       "Leave your old property spotless or arrive at a perfectly clean new home. Designed to meet landlord expectations so you get your deposit back.",
     includes: ["Walls & skirting boards", "Inside all cabinets", "Appliances & fixtures", "Window sills & tracks"],
-    price: "Fixed precise quote",
   },
   {
     image: "/services/sofa-cleaning.webp",
     title: "Upholstery & Sofa Cleaning",
+    slug: "sofa-steam",
     badge: null,
     badgeColor: null,
     description:
       "Professional steam and dry cleaning of sofas, armchairs, and upholstered furniture to remove stains, dust mites, and allergens safely.",
     includes: ["Fabric & leather sofas", "Stain treatment", "Odour neutralisation", "Same-day dry time"],
-    price: "From 120 SAR/piece",
   },
   {
     image: "/services/laundry-cleaning.webp",
     title: "Carpet & Rug Cleaning",
+    slug: "sofa-steam",
     badge: null,
     badgeColor: null,
     description:
       "Deep-clean your carpets and rugs with advanced steam techniques that kill bacteria and extract deep-rooted dirt for a fresher feel.",
     includes: ["Steam sanitisation", "Deep stain removal", "Odour treatment", "Safe for kids & pets"],
-    price: "From 90 SAR/piece",
   },
   {
     image: "/services/kitchen-cleaning.webp",
     title: "Kitchen Deep Clean",
+    slug: "deep-cleaning",
     badge: null,
     badgeColor: null,
     description:
       "A focused, intensive clean of your kitchen — including degreasing cooktops, ovens, rangehoods, and surfaces to restaurant-grade standards.",
     includes: ["Oven & stovetop degreasing", "Rangehood filter clean", "Appliance clean", "Sink & tap polish"],
-    price: "From 150 SAR",
   },
 ];
 
@@ -100,6 +100,7 @@ const commercialServices = [
   {
     image: "/services/utensils-cleaning.webp",
     title: "Office Cleaning",
+    slug: "standard-cleaning",
     description:
       "Reliable daily, weekly, or monthly office cleaning across Riyadh. Keep your workspace spotless, professional, and healthy for your team.",
     includes: ["Workstation cleaning", "Common area maintenance", "Restroom sanitisation", "Bin collection"],
@@ -107,6 +108,7 @@ const commercialServices = [
   {
     image: "/services/kitchen-cleaning.webp",
     title: "Restaurant & Café Cleaning",
+    slug: "deep-cleaning",
     description:
       "Commercial kitchen deep cleans meeting strict Saudi food safety standards. Keep grease traps, hoods, equipment, and floors sanitized.",
     includes: ["Commercial kitchen equipment", "Grease trap cleaning", "Food prep area sanitisation", "Floors & drains"],
@@ -114,6 +116,7 @@ const commercialServices = [
   {
     image: "/services/balcony-cleaning.webp",
     title: "Villa & Compound Cleaning",
+    slug: "move-in-out",
     description:
       "Full-property cleaning for villas and gated compounds — including multiple floors, majlis areas, exterior spaces, and maid quarters.",
     includes: ["Multi-floor cleaning", "Majlis & reception areas", "Exterior balconies", "Custom clean frequency"],
@@ -198,7 +201,7 @@ export default function ServicesPage() {
           </div>
 
           <div className="services-img-grid">
-            {residentialServices.map(({ image, title, badge, badgeColor, description, includes, price }) => (
+            {residentialServices.map(({ image, title, slug, badge, badgeColor, description, includes }) => (
               <article key={title} className="service-img-card" itemScope itemType="https://schema.org/Service">
                 <div className="service-card-image-wrap">
                   <img src={image} alt={title} className="service-card-image" />
@@ -219,15 +222,21 @@ export default function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="service-card-footer">
-                    <span className="service-card-price">{price}</span>
+                  <div className="service-card-footer" style={{ display: 'flex', gap: '0.5rem' }}>
+                    <Link href={`/book?service=${slug}`} className="service-card-cta" style={{ flex: 1, justifyContent: 'center' }}>
+                      Get A Quote <ArrowRight size={15} />
+                    </Link>
                     <a
-                      href={waLink(`Hi! I would like to get a quote for "${title}". Can you help me?`)}
+                      href={waLink(`Hi! I'm interested in "${title}" from your website. Can you give me a quote?`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="service-card-cta"
+                      style={{ padding: '0.5rem 0.75rem', backgroundColor: '#25d366', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      aria-label={`WhatsApp for ${title}`}
                     >
-                      Get A Quote <ArrowRight size={15} />
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                      </svg>
                     </a>
                   </div>
                 </div>
@@ -252,7 +261,7 @@ export default function ServicesPage() {
           </div>
 
           <div className="services-img-grid">
-            {commercialServices.map(({ image, title, description, includes }) => (
+            {commercialServices.map(({ image, title, slug, description, includes }) => (
               <article key={title} className="service-img-card" itemScope itemType="https://schema.org/Service">
                 <div className="service-card-image-wrap">
                   <img src={image} alt={title} className="service-card-image" />
@@ -268,15 +277,25 @@ export default function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="service-card-footer" style={{ borderTop: 'none', paddingTop: 0 }}>
+                  <div className="service-card-footer" style={{ borderTop: 'none', paddingTop: 0, display: 'flex', gap: '0.5rem' }}>
+                    <Link
+                      href={`/book?service=${slug}`}
+                      className="service-card-cta"
+                      style={{ flex: 1, justifyContent: 'center' }}
+                    >
+                      Get A Quote <ArrowRight size={15} />
+                    </Link>
                     <a
-                      href={waLink(`Hi! I would like to get a quote for commercial "${title}". Can you help me?`)}
+                      href={waLink(`Hi! I'm interested in commercial "${title}" from your website. Can you give me a quote?`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="service-card-cta"
-                      style={{ width: '100%', justifyContent: 'center' }}
+                      style={{ padding: '0.5rem 0.75rem', backgroundColor: '#25d366', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      aria-label={`WhatsApp for ${title}`}
                     >
-                      Get A Quote <ArrowRight size={15} />
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                      </svg>
                     </a>
                   </div>
                 </div>

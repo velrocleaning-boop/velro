@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Home, Sparkles, Calendar, User, CheckCircle2, ChevronRight, ChevronLeft, Tag, Loader2, AlertCircle } from 'lucide-react';
 
 const SERVICES = [
@@ -50,10 +51,24 @@ type BookingResult = {
   total: number | null;
 };
 
+type SlotInfo = { time: string; available: boolean; remaining: number };
+
+// Default export wraps in Suspense (required by Next.js for useSearchParams)
 export default function BookingPage() {
+  return (
+    <Suspense fallback={<main style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Loader2 size={32} style={{ animation: 'spin 1s linear infinite' }} /></main>}>
+      <BookingForm />
+    </Suspense>
+  );
+}
+
+function BookingForm() {
+  const searchParams = useSearchParams();
+  const preSelectedService = searchParams.get('service') || 'standard-cleaning';
+
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
-    service: 'standard-cleaning',
+    service: preSelectedService,
     rooms: 1,
     bathrooms: 1,
     tier: 'standard' as 'standard' | 'premium' | 'deep',
@@ -73,9 +88,26 @@ export default function BookingPage() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [booking, setBooking] = useState<BookingResult | null>(null);
+  const [availableSlots, setAvailableSlots] = useState<SlotInfo[]>([]);
+  const [slotsLoading, setSlotsLoading] = useState(false);
 
   // Get today's date as min date
   const today = new Date().toISOString().split('T')[0];
+
+  // Fetch available slots when date changes
+  useEffect(() => {
+    if (!form.date) { setAvailableSlots([]); return; }
+    setSlotsLoading(true);
+    const zone = form.district ? form.district.toLowerCase().replace(/\s+/g, '-') : undefined;
+    const params = new URLSearchParams({ date: form.date, ...(zone ? { zone } : {}) });
+    fetch(`/api/bookings/slots?${params}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) setAvailableSlots(data.data.slots || []);
+      })
+      .catch(() => {})
+      .finally(() => setSlotsLoading(false));
+  }, [form.date, form.district]);
 
   // Fetch pricing whenever key fields change
   const fetchPricing = useCallback(async () => {
@@ -348,14 +380,40 @@ export default function BookingPage() {
                   </div>
                   <div>
                     <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.75rem', fontSize: '0.9rem' }}>Time</label>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.5rem' }}>
-                      {TIME_SLOTS.map(t => (
-                        <div key={t} onClick={() => setForm(f => ({ ...f, time: t }))}
-                          style={{ padding: '0.6rem', textAlign: 'center', borderRadius: '0.6rem', border: `2px solid ${form.time === t ? 'var(--primary)' : '#e2e8f0'}`, background: form.time === t ? '#eff6ff' : 'white', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: form.time === t ? 'var(--primary)' : '#374151', transition: 'all 0.2s' }}>
-                          {t}
-                        </div>
-                      ))}
-                    </div>
+                    {slotsLoading ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#6b7280', padding: '0.5rem 0' }}>
+                        <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} />
+                        <span style={{ fontSize: '0.9rem' }}>Loading available slots...</span>
+                      </div>
+                    ) : !form.date ? (
+                      <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>Select a date first to see available times.</p>
+                    ) : (
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.5rem' }}>
+                        {(availableSlots.length > 0 ? availableSlots : TIME_SLOTS.map(t => ({ time: t, available: true, remaining: 5 }))).map(slot => (
+                          <div key={slot.time}
+                            onClick={() => slot.available && setForm(f => ({ ...f, time: slot.time }))}
+                            title={!slot.available ? 'This slot is fully booked' : `${slot.remaining} spots left`}
+                            style={{
+                              padding: '0.6rem',
+                              textAlign: 'center',
+                              borderRadius: '0.6rem',
+                              border: `2px solid ${form.time === slot.time ? 'var(--primary)' : slot.available ? '#e2e8f0' : '#f3f4f6'}`,
+                              background: form.time === slot.time ? '#eff6ff' : slot.available ? 'white' : '#f9fafb',
+                              cursor: slot.available ? 'pointer' : 'not-allowed',
+                              fontSize: '0.85rem',
+                              fontWeight: 600,
+                              color: form.time === slot.time ? 'var(--primary)' : slot.available ? '#374151' : '#d1d5db',
+                              transition: 'all 0.2s',
+                              position: 'relative',
+                            }}>
+                            {slot.time}
+                            {!slot.available && (
+                              <div style={{ fontSize: '0.6rem', color: '#9ca3af', fontWeight: 500, marginTop: '2px' }}>Full</div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div>
                     <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem', fontSize: '0.9rem' }}>Special Notes (optional)</label>
