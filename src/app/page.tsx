@@ -62,29 +62,42 @@ export default function HomePage() {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
+  const SERVICE_SLUGS: Record<string, string> = {
+    'Standard Cleaning': 'standard-cleaning',
+    'Deep Cleaning': 'deep-cleaning',
+    'Move-in/out': 'move-in-out',
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name || !formData.phone) {
+      alert("Please enter your name and phone number");
+      return;
+    }
     if (!formData.district) {
       alert("Please select a neighborhood");
       return;
     }
     setStatus('loading');
     try {
-      const res = await fetch('/api/send', {
+      const res = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
-          email: 'customer@example.com' // Placeholder as it's not in the simple hero form
-        })
+          name: formData.name,
+          phone: formData.phone,
+          district: formData.district,
+          service: SERVICE_SLUGS[formData.service] || 'standard-cleaning',
+        }),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
         setStatus('success');
         setFormData({ name: '', phone: '', district: '', service: 'Standard Cleaning' });
       } else {
         setStatus('error');
       }
-    } catch (err) {
+    } catch {
       setStatus('error');
     }
   };
@@ -209,9 +222,15 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <button 
-                  className="btn-primary" 
-                  type="submit" 
+                {status === 'error' && (
+                  <div style={{ padding: '0.75rem 1rem', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '0.6rem', color: '#dc2626', fontSize: '0.875rem', fontWeight: 600, marginBottom: '0.75rem' }}>
+                    Something went wrong. Please try again or call us directly.
+                  </div>
+                )}
+
+                <button
+                  className="btn-primary"
+                  type="submit"
                   disabled={status === 'loading'}
                   style={{ width: '100%', height: '3.5rem', fontSize: '1.05rem', fontWeight: 800, backgroundColor: 'var(--primary)', color: 'white', borderRadius: '0.75rem', marginTop: '0.5rem' }}
                 >

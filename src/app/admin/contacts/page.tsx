@@ -5,11 +5,12 @@ import { MessageCircle } from 'lucide-react';
 
 export const revalidate = 0;
 
-export default async function ContactsPage({ searchParams }: { searchParams: { search?: string } }) {
+export default async function ContactsPage({ searchParams }: { searchParams: Promise<{ search?: string }> }) {
+  const { search } = await searchParams;
   let query = supabase.from('contacts').select('*').order('created_at', { ascending: false });
 
-  if (searchParams.search) {
-    query = query.or(`name.ilike.%${searchParams.search}%,email.ilike.%${searchParams.search}%,phone.ilike.%${searchParams.search}%`);
+  if (search) {
+    query = query.or(`name.ilike.%${search}%,email.ilike.%${search}%,phone.ilike.%${search}%`);
   }
 
   const { data: contacts, error } = await query;
