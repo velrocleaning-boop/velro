@@ -31,7 +31,7 @@ export default function Loading() {
         `}} />
       </div>
       <p style={{ marginTop: '1.5rem', fontWeight: 700, color: '#111827', letterSpacing: '0.1em', textTransform: 'uppercase', fontSize: '0.8rem' }}>
-        Sparkling results incoming...
+        Loading...
       </p>
     </div>
   );
