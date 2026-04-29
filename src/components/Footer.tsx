@@ -1,6 +1,10 @@
+"use client";
 import Link from "next/link";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer">
       <div className="container">
@@ -10,48 +14,46 @@ export default function Footer() {
               <img src="/Velro logo white.png" alt="Velro Logo" style={{ height: "45px", width: "auto" }} />
             </Link>
             <p style={{ color: "#9ca3af", lineHeight: 1.6, marginBottom: "1.5rem" }}>
-              Your trusted partner for a cleaner, happier home in Riyadh, Saudi Arabia.
+              {t('footer.tagline')}
             </p>
           </div>
           <div className="footer-col">
-            <h4>Services</h4>
+            <h4>{t('footer.services')}</h4>
             <ul className="footer-links">
-              <li><Link href="/services/standard-cleaning">Standard Cleaning</Link></li>
-              <li><Link href="/services/deep-cleaning">Deep Cleaning</Link></li>
-              <li><Link href="/services/move-in-out">Move-in/out</Link></li>
-              <li><Link href="/services/post-construction">Post-Construction</Link></li>
+              <li><Link href="/services/standard-cleaning">{t('footer.standard')}</Link></li>
+              <li><Link href="/services/deep-cleaning">{t('footer.deep')}</Link></li>
+              <li><Link href="/services/move-in-out">{t('footer.moveinout')}</Link></li>
+              <li><Link href="/services/post-construction">{t('footer.postconstruction')}</Link></li>
             </ul>
           </div>
           <div className="footer-col">
-            <h4>Company</h4>
+            <h4>{t('footer.company')}</h4>
             <ul className="footer-links">
-              <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/membership" style={{ color: '#fbbf24', fontWeight: 700 }}>Gold Membership 👑</Link></li>
-              <li><Link href="/gift-cards">Gift Cards 🎁</Link></li>
-              <li><Link href="/pricing">Pricing Plans</Link></li>
-              <li><Link href="/faqs">FAQs</Link></li>
-              <li><Link href="/locations">Our Locations</Link></li>
-              <li><Link href="/how-it-works">How it works</Link></li>
-              <li><Link href="/testimonials">Testimonials</Link></li>
-              <li><Link href="/blog">Blog & Tips</Link></li>
-              <li><Link href="/contact">Contact Us</Link></li>
+              <li><Link href="/about">{t('footer.about')}</Link></li>
+              <li><Link href="/pricing">{t('footer.pricing')}</Link></li>
+              <li><Link href="/faqs">{t('footer.faqs')}</Link></li>
+              <li><Link href="/locations">{t('footer.locations')}</Link></li>
+              <li><Link href="/how-it-works">{t('footer.how')}</Link></li>
+              <li><Link href="/testimonials">{t('footer.testimonials')}</Link></li>
+              <li><Link href="/blog">{t('footer.blog')}</Link></li>
+              <li><Link href="/contact">{t('footer.contact')}</Link></li>
             </ul>
           </div>
           <div className="footer-col">
-            <h4>Legal</h4>
+            <h4>{t('footer.legal')}</h4>
             <ul className="footer-links">
-              <li><Link href="/terms-of-service">Terms of Service</Link></li>
-              <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-              <li><Link href="/refund-policy">Satisfaction Guarantee</Link></li>
+              <li><Link href="/terms-of-service">{t('footer.terms')}</Link></li>
+              <li><Link href="/privacy-policy">{t('footer.privacy')}</Link></li>
+              <li><Link href="/refund-policy">{t('footer.refund')}</Link></li>
             </ul>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Velro. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {t('footer.copyright')}</p>
           <div style={{ display: "flex", gap: "1.5rem" }}>
-            <Link href="#">Instagram</Link>
-            <Link href="#">Twitter</Link>
-            <Link href="#">Facebook</Link>
+            <Link href="#">{t('footer.instagram')}</Link>
+            <Link href="#">{t('footer.twitter')}</Link>
+            <Link href="#">{t('footer.facebook')}</Link>
           </div>
         </div>
       </div>

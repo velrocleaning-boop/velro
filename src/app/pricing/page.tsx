@@ -3,10 +3,10 @@ import React from 'react';
 import { Check, Info, Sparkles, Star } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Home, Building2 } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const WA_NUMBER = '966594847866';
 
-// Official WhatsApp SVG icon
 function WhatsAppIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -37,106 +37,121 @@ interface PricingCategory {
   plans: Plan[];
 }
 
-const pricingPlans: PricingCategory[] = [
-  {
-    type: 'Apartment',
-    icon: Home,
-    color: '#253bbd',
-    lightBg: '#eef2ff',
-    plans: [
-      {
-        size: 'Studio / 1-BR',
-        price: '150 SAR',
-        badge: null,
-        features: ['1 Cleaner', '2-3 Hours', 'Basic Supplies Incl.', 'Kitchen & Bathroom'],
-        waMsg: "Hi! I'd like to book a Studio/1-BR apartment clean for 150 SAR. Can you confirm availability?",
-        image: '/services/sweeping-dusting.webp'
-      },
-      {
-        size: '2-BR Apartment',
-        price: '250 SAR',
-        badge: 'Most Popular',
-        features: ['1-2 Cleaners', '3-4 Hours', 'Basic Supplies Incl.', 'All Rooms + Kitchen & Bathrooms'],
-        waMsg: "Hi! I'd like to book a 2-BR apartment clean for 250 SAR. Can you confirm availability?",
-        image: '/services/floor-mopping.webp'
-      },
-      {
-        size: '3-BR Apartment',
-        price: '350 SAR',
-        badge: null,
-        features: ['2 Cleaners', '4-5 Hours', 'Basic Supplies Incl.', 'Full Deep Clean Option Available'],
-        waMsg: "Hi! I'd like to book a 3-BR apartment clean for 350 SAR. Can you confirm availability?",
-        image: '/services/bathroom-cleaning.webp'
-      },
-    ],
-  },
-  {
-    type: 'Villa',
-    icon: Building2,
-    color: '#0d7fba',
-    lightBg: '#e0f4ff',
-    plans: [
-      {
-        size: 'Small Villa',
-        price: '500 SAR',
-        badge: null,
-        features: ['2 Cleaners', '5-6 Hours', 'Full Equipment Incl.', 'All Floors & Bathrooms'],
-        waMsg: "Hi! I'd like to book a Small Villa clean for 500 SAR. Can you confirm availability?",
-        image: '/services/laundry-cleaning.webp'
-      },
-      {
-        size: 'Medium Villa',
-        price: '800 SAR',
-        badge: 'Best Value',
-        features: ['3 Cleaners', '6-7 Hours', 'Full Equipment Incl.', 'Majlis & Outdoor Areas'],
-        waMsg: "Hi! I'd like to book a Medium Villa clean for 800 SAR. Can you confirm availability?",
-        image: '/services/kitchen-cleaning.webp'
-      },
-      {
-        size: 'Large Villa',
-        price: '1,200+ SAR',
-        badge: null,
-        features: ['4+ Cleaners', 'Full Day', 'Deep Sanitization', 'Custom Quote Available'],
-        waMsg: "Hi! I'm interested in a Large Villa clean (1,200+ SAR). Can I get a custom quote?",
-        image: '/services/sofa-cleaning.webp'
-      },
-    ],
-  },
-];
-
 interface AddOn {
   name: string;
   price: string;
   image: string;
 }
 
-const addOns: AddOn[] = [
-  { name: 'Oven Deep Clean', price: '50 SAR', image: '/services/utensils-cleaning.webp' },
-  { name: 'Fridge Interior', price: '40 SAR', image: '/services/kitchen-cleaning.webp' },
-  { name: 'Interior Windows', price: '100 SAR', image: '/services/sweeping-dusting.webp' },
-  { name: 'Carpet Steam (Per Rm)', price: '150 SAR', image: '/services/floor-mopping.webp' },
-  { name: 'Sofa Steam (3-Seater)', price: '200 SAR', image: '/services/sofa-cleaning.webp' },
-  { name: 'Balcony / Patio', price: '75 SAR', image: '/services/balcony-cleaning.webp' },
-];
-
 export default function PricingPage() {
+  const { t, lang } = useTranslation();
+  const ar = lang === 'ar';
+
+  const pricingPlans: PricingCategory[] = [
+    {
+      type: t('pricing.cat_apartment'),
+      icon: Home,
+      color: '#253bbd',
+      lightBg: '#eef2ff',
+      plans: [
+        {
+          size: ar ? 'استوديو / غرفة 1' : 'Studio / 1-BR',
+          price: '150 SAR',
+          badge: null,
+          features: ar
+            ? ['عامل نظافة واحد', '2-3 ساعات', 'المستلزمات الأساسية مشمولة', 'المطبخ والحمام']
+            : ['1 Cleaner', '2-3 Hours', 'Basic Supplies Incl.', 'Kitchen & Bathroom'],
+          waMsg: "Hi! I'd like to book a Studio/1-BR apartment clean for 150 SAR. Can you confirm availability?",
+          image: '/services/sweeping-dusting.webp'
+        },
+        {
+          size: ar ? 'شقة 2 غرف' : '2-BR Apartment',
+          price: '250 SAR',
+          badge: ar ? 'الأكثر طلبًا' : 'Most Popular',
+          features: ar
+            ? ['1-2 عامل نظافة', '3-4 ساعات', 'المستلزمات الأساسية مشمولة', 'جميع الغرف + المطبخ والحمامات']
+            : ['1-2 Cleaners', '3-4 Hours', 'Basic Supplies Incl.', 'All Rooms + Kitchen & Bathrooms'],
+          waMsg: "Hi! I'd like to book a 2-BR apartment clean for 250 SAR. Can you confirm availability?",
+          image: '/services/floor-mopping.webp'
+        },
+        {
+          size: ar ? 'شقة 3 غرف' : '3-BR Apartment',
+          price: '350 SAR',
+          badge: null,
+          features: ar
+            ? ['عاملا نظافة', '4-5 ساعات', 'المستلزمات الأساسية مشمولة', 'خيار التنظيف العميق الكامل متاح']
+            : ['2 Cleaners', '4-5 Hours', 'Basic Supplies Incl.', 'Full Deep Clean Option Available'],
+          waMsg: "Hi! I'd like to book a 3-BR apartment clean for 350 SAR. Can you confirm availability?",
+          image: '/services/bathroom-cleaning.webp'
+        },
+      ],
+    },
+    {
+      type: t('pricing.cat_villa'),
+      icon: Building2,
+      color: '#0d7fba',
+      lightBg: '#e0f4ff',
+      plans: [
+        {
+          size: ar ? 'فيلا صغيرة' : 'Small Villa',
+          price: '500 SAR',
+          badge: null,
+          features: ar
+            ? ['عاملا نظافة', '5-6 ساعات', 'المعدات الكاملة مشمولة', 'جميع الطوابق والحمامات']
+            : ['2 Cleaners', '5-6 Hours', 'Full Equipment Incl.', 'All Floors & Bathrooms'],
+          waMsg: "Hi! I'd like to book a Small Villa clean for 500 SAR. Can you confirm availability?",
+          image: '/services/laundry-cleaning.webp'
+        },
+        {
+          size: ar ? 'فيلا متوسطة' : 'Medium Villa',
+          price: '800 SAR',
+          badge: ar ? 'أفضل قيمة' : 'Best Value',
+          features: ar
+            ? ['3 عمال نظافة', '6-7 ساعات', 'المعدات الكاملة مشمولة', 'المجلس والمناطق الخارجية']
+            : ['3 Cleaners', '6-7 Hours', 'Full Equipment Incl.', 'Majlis & Outdoor Areas'],
+          waMsg: "Hi! I'd like to book a Medium Villa clean for 800 SAR. Can you confirm availability?",
+          image: '/services/kitchen-cleaning.webp'
+        },
+        {
+          size: ar ? 'فيلا كبيرة' : 'Large Villa',
+          price: '1,200+ SAR',
+          badge: null,
+          features: ar
+            ? ['4+ عمال نظافة', 'يوم كامل', 'تعقيم عميق', 'عرض سعر مخصص متاح']
+            : ['4+ Cleaners', 'Full Day', 'Deep Sanitization', 'Custom Quote Available'],
+          waMsg: "Hi! I'm interested in a Large Villa clean (1,200+ SAR). Can I get a custom quote?",
+          image: '/services/sofa-cleaning.webp'
+        },
+      ],
+    },
+  ];
+
+  const addOns: AddOn[] = [
+    { name: ar ? 'تنظيف عميق للفرن' : 'Oven Deep Clean', price: '50 SAR', image: '/services/utensils-cleaning.webp' },
+    { name: ar ? 'داخل الثلاجة' : 'Fridge Interior', price: '40 SAR', image: '/services/kitchen-cleaning.webp' },
+    { name: ar ? 'نوافذ داخلية' : 'Interior Windows', price: '100 SAR', image: '/services/sweeping-dusting.webp' },
+    { name: ar ? 'بخار السجاد (للغرفة)' : 'Carpet Steam (Per Rm)', price: '150 SAR', image: '/services/floor-mopping.webp' },
+    { name: ar ? 'بخار الكنبة (3 مقاعد)' : 'Sofa Steam (3-Seater)', price: '200 SAR', image: '/services/sofa-cleaning.webp' },
+    { name: ar ? 'البلكونة / الفناء' : 'Balcony / Patio', price: '75 SAR', image: '/services/balcony-cleaning.webp' },
+  ];
+
   return (
     <main className="pricing-page">
       {/* HERO */}
       <section className="pricing-hero">
         <div className="pricing-hero-bg" aria-hidden="true" />
         <div className="container pricing-hero-content">
-          <div className="section-eyebrow">Transparent Pricing</div>
+          <div className="section-eyebrow">{t('pricing.eyebrow')}</div>
           <h1 className="pricing-hero-title">
-            Simple, Honest <span>Pricing</span>
+            {t('pricing.title1')}<span>{t('pricing.title2')}</span>
           </h1>
           <p className="pricing-hero-sub">
-            No hidden fees. No surprises. Pick your plan and book directly on WhatsApp in seconds.
+            {t('pricing.subtitle')}
           </p>
           <div className="pricing-trust-row">
-            {['100% Satisfaction Guarantee', 'No Upfront Payment', 'Instant WhatsApp Booking'].map(t => (
-              <span key={t} className="pricing-trust-pill">
-                <Check size={14} /> {t}
+            {[t('pricing.trust1'), t('pricing.trust2'), t('pricing.trust3')].map(trust => (
+              <span key={trust} className="pricing-trust-pill">
+                <Check size={14} /> {trust}
               </span>
             ))}
           </div>
@@ -154,7 +169,7 @@ export default function PricingPage() {
                 <div className="pricing-cat-icon" style={{ background: category.lightBg, color: category.color }}>
                   <Icon size={26} />
                 </div>
-                <h2 className="pricing-cat-title">{category.type} Cleaning</h2>
+                <h2 className="pricing-cat-title">{category.type}</h2>
               </div>
 
               <div className="pricing-cards-row">
@@ -189,7 +204,7 @@ export default function PricingPage() {
                         className={`pricing-wa-btn${plan.badge ? ' pricing-wa-btn--primary' : ''}`}
                       >
                         <WhatsAppIcon size={18} />
-                        Book on WhatsApp
+                        {t('pricing.book_wa')}
                       </a>
                     </div>
                   </div>
@@ -199,16 +214,16 @@ export default function PricingPage() {
           );
         })}
 
-        {/* ADD-ONS (Redesigned to be clean and professional) */}
+        {/* ADD-ONS */}
         <section className="pricing-category">
           <div className="pricing-category-header">
             <div className="pricing-cat-icon" style={{ background: '#f3e8ff', color: '#9333ea' }}>
               <Sparkles size={26} />
             </div>
             <div>
-              <h2 className="pricing-cat-title">Add-On Services</h2>
+              <h2 className="pricing-cat-title">{t('pricing.addon_title')}</h2>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginTop: '0.25rem' }}>
-                Customize your clean. Mention these when booking on WhatsApp.
+                {t('pricing.addon_subtitle')}
               </p>
             </div>
           </div>
@@ -233,7 +248,7 @@ export default function PricingPage() {
                     style={{ marginTop: 'auto', padding: '0.65rem 1rem' }}
                   >
                     <WhatsAppIcon size={16} />
-                    Add to Booking
+                    {t('pricing.add_booking')}
                   </a>
                 </div>
               </div>
@@ -245,11 +260,8 @@ export default function PricingPage() {
         <div className="pricing-info-alert">
           <Info color="#f97316" size={28} style={{ flexShrink: 0, marginTop: 2 }} />
           <div>
-            <h3>Need a Custom Quote?</h3>
-            <p>
-              For mansions, commercial properties, post-construction, or estates larger than 500 sqm — contact us
-              for a free on-site inspection and tailored quote.
-            </p>
+            <h3>{t('pricing.custom_title')}</h3>
+            <p>{t('pricing.custom_desc')}</p>
             <a
               href={waLink("Hi! I need a custom quote for a large/commercial property. Can you help?")}
               target="_blank"
@@ -257,7 +269,7 @@ export default function PricingPage() {
               className="pricing-info-wa"
             >
               <WhatsAppIcon size={15} />
-              Get a Custom Quote
+              {t('pricing.custom_wa')}
             </a>
           </div>
         </div>
@@ -267,8 +279,8 @@ export default function PricingPage() {
           <div className="pricing-cta-wa-icon-wrap">
             <WhatsAppIcon size={36} />
           </div>
-          <h2>Ready to Book?</h2>
-          <p>Chat with our team on WhatsApp — we&apos;ll confirm your slot in minutes.</p>
+          <h2>{t('pricing.ready_title')}</h2>
+          <p>{t('pricing.ready_desc')}</p>
           <a
             href={waLink("Hi! I'd like to book a cleaning service in Riyadh. Can you help me?")}
             target="_blank"
@@ -276,7 +288,7 @@ export default function PricingPage() {
             className="pricing-cta-wa"
           >
             <WhatsAppIcon size={20} />
-            Start on WhatsApp
+            {t('pricing.start_wa')}
           </a>
           <p className="pricing-cta-number">+966 59 484 7866</p>
         </div>

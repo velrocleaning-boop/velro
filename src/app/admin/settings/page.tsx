@@ -8,7 +8,7 @@ const SETTINGS_SECTIONS = [
     icon: '🏢',
     fields: [
       { key: 'business_name', label: 'Business Name', type: 'text', default: 'Velro Services' },
-      { key: 'business_phone', label: 'Phone', type: 'text', default: '+966 50 000 0000' },
+      { key: 'business_phone', label: 'Phone', type: 'text', default: '+966 59 484 7866' },
       { key: 'business_email', label: 'Email', type: 'email', default: 'hello@velro.services' },
       { key: 'business_address', label: 'Address', type: 'text', default: 'Riyadh, Saudi Arabia' },
       { key: 'vat_number', label: 'VAT Number', type: 'text', default: '' },

@@ -23,8 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pricing',
     '/faqs',
     '/privacy-policy',
-    '/membership',
-    '/gift-cards',
   ];
 
   const locationRoutes = locations.map(l => `/locations/${l.slug}`);

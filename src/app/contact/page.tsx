@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageCircle, Clock, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
 
@@ -32,26 +34,26 @@ export default function ContactPage() {
       <div className="container">
         <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
           <h1 style={{ fontSize: '3.5rem', fontWeight: 800, color: '#111827', marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
-            Get in <span style={{ color: 'var(--primary)' }}>Touch</span>
+            {t('contact.title_pre')}<span style={{ color: 'var(--primary)' }}>{t('contact.title_highlight')}</span>
           </h1>
           <p style={{ fontSize: '1.25rem', color: '#6b7280', maxWidth: '700px', margin: '0 auto' }}>
-            Have questions about our services or need a custom quote? We're here to help you 24/7 in Riyadh.
+            {t('contact.subtitle')}
           </p>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '4rem' }}>
           {/* CONTACT INFO */}
           <div>
-            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '2.5rem' }}>Contact Information</h2>
-            
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '2.5rem' }}>{t('contact.info_heading')}</h2>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
               <div style={{ display: 'flex', gap: '1.5rem' }}>
                 <div style={{ width: '56px', height: '56px', borderRadius: '1rem', backgroundColor: '#eef2ff', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Phone size={24} />
                 </div>
                 <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>Phone</h4>
-                  <p style={{ color: '#6b7280' }}>+966 50 000 0000</p>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>{t('contact.phone_label')}</h4>
+                  <p style={{ color: '#6b7280' }}>+966 59 484 7866</p>
                 </div>
               </div>
 
@@ -60,7 +62,7 @@ export default function ContactPage() {
                   <Mail size={24} />
                 </div>
                 <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>Email</h4>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>{t('contact.email_label')}</h4>
                   <p style={{ color: '#6b7280' }}>hello@velro.sa</p>
                 </div>
               </div>
@@ -70,7 +72,7 @@ export default function ContactPage() {
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>Head Office</h4>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>{t('contact.address_label')}</h4>
                   <p style={{ color: '#6b7280' }}>King Fahd Branch Rd, Al Olaya, Riyadh 12212, Saudi Arabia</p>
                 </div>
               </div>
@@ -80,84 +82,84 @@ export default function ContactPage() {
                   <Clock size={24} />
                 </div>
                 <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>Working Hours</h4>
-                  <p style={{ color: '#6b7280' }}>Open 24/7 for Bookings<br/>Office: 8 AM - 10 PM</p>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>{t('contact.hours_label')}</h4>
+                  <p style={{ color: '#6b7280' }}>{t('contact.hours_line1')}<br/>{t('contact.hours_line2')}</p>
                 </div>
               </div>
             </div>
 
             <div style={{ marginTop: '3rem', padding: '2rem', borderRadius: '1.5rem', backgroundColor: '#111827', color: 'white' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <MessageCircle size={20} /> Instant Support
+                <MessageCircle size={20} /> {t('contact.wa_heading')}
               </h3>
-              <p style={{ opacity: 0.8, marginBottom: '1.5rem' }}>Chat with us on WhatsApp for a faster response.</p>
-              <a href="https://wa.me/966500000000" style={{ display: 'block', textAlign: 'center', backgroundColor: '#25D366', color: 'white', padding: '0.75rem', borderRadius: '0.75rem', fontWeight: 700, textDecoration: 'none' }}>
-                Chat on WhatsApp
+              <p style={{ opacity: 0.8, marginBottom: '1.5rem' }}>{t('contact.wa_desc')}</p>
+              <a href="https://wa.me/966594847866" style={{ display: 'block', textAlign: 'center', backgroundColor: '#25D366', color: 'white', padding: '0.75rem', borderRadius: '0.75rem', fontWeight: 700, textDecoration: 'none' }}>
+                {t('contact.wa_btn')}
               </a>
             </div>
           </div>
 
           {/* FORM */}
           <div style={{ backgroundColor: '#fff', padding: '3rem', borderRadius: '2rem', border: '1px solid #e2e8f0', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.05)' }}>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '2rem' }}>Send us a message</h2>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '2rem' }}>{t('contact.form_heading')}</h2>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: '#374151' }}>Name</label>
-                  <input 
-                    type="text" 
-                    required 
-                    placeholder="John Doe"
-                    style={{ width: '100%', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #d1d5db', outline: 'none' }} 
+                  <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: '#374151' }}>{t('contact.name_label')}</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder={t('contact.name_placeholder')}
+                    style={{ width: '100%', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #d1d5db', outline: 'none' }}
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: '#374151' }}>Phone</label>
-                  <input 
-                    type="tel" 
-                    required 
+                  <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: '#374151' }}>{t('contact.phone_form_label')}</label>
+                  <input
+                    type="tel"
+                    required
                     placeholder="+966"
-                    style={{ width: '100%', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #d1d5db', outline: 'none' }} 
+                    style={{ width: '100%', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #d1d5db', outline: 'none' }}
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   />
                 </div>
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: '#374151' }}>Email</label>
-                <input 
-                  type="email" 
-                  required 
-                  placeholder="john@example.com"
-                  style={{ width: '100%', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #d1d5db', outline: 'none' }} 
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: '#374151' }}>{t('contact.email_form_label')}</label>
+                <input
+                  type="email"
+                  required
+                  placeholder={t('contact.email_placeholder')}
+                  style={{ width: '100%', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #d1d5db', outline: 'none' }}
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: '#374151' }}>Message</label>
-                <textarea 
-                  required 
-                  placeholder="How can we help you?"
+                <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.5rem', color: '#374151' }}>{t('contact.msg_label')}</label>
+                <textarea
+                  required
+                  placeholder={t('contact.msg_placeholder')}
                   rows={4}
-                  style={{ width: '100%', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #d1d5db', outline: 'none', resize: 'none' }} 
+                  style={{ width: '100%', padding: '0.875rem', borderRadius: '0.75rem', border: '1px solid #d1d5db', outline: 'none', resize: 'none' }}
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
                 ></textarea>
               </div>
-              
-              <button 
-                type="submit" 
+
+              <button
+                type="submit"
                 disabled={status !== 'idle'}
-                style={{ 
-                  backgroundColor: status === 'sent' ? '#10b981' : 'var(--primary)', 
-                  color: 'white', 
-                  padding: '1.125rem', 
-                  borderRadius: '1rem', 
-                  fontWeight: 700, 
-                  border: 'none', 
+                style={{
+                  backgroundColor: status === 'sent' ? '#10b981' : 'var(--primary)',
+                  color: 'white',
+                  padding: '1.125rem',
+                  borderRadius: '1rem',
+                  fontWeight: 700,
+                  border: 'none',
                   cursor: status === 'idle' ? 'pointer' : 'default',
                   display: 'flex',
                   alignItems: 'center',
@@ -167,9 +169,9 @@ export default function ContactPage() {
                   transition: 'all 0.3s ease'
                 }}
               >
-                {status === 'idle' && <><Send size={20} /> Send Message</>}
-                {status === 'sending' && 'Sending...'}
-                {status === 'sent' && <><CheckCircle2 size={20} /> Sent Successfully!</>}
+                {status === 'idle' && <><Send size={20} /> {t('contact.send_btn')}</>}
+                {status === 'sending' && t('contact.sending')}
+                {status === 'sent' && <><CheckCircle2 size={20} /> {t('contact.sent')}</>}
               </button>
             </form>
           </div>

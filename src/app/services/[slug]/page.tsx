@@ -36,7 +36,7 @@ export default function ServiceDetailPage() {
               {service.fullDescription}
             </p>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link href="https://wa.me/966500000000" style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '1.125rem 2.5rem', borderRadius: '1rem', fontWeight: 700, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <Link href="https://wa.me/966594847866" style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '1.125rem 2.5rem', borderRadius: '1rem', fontWeight: 700, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 Book Now <ArrowRight size={20} />
               </Link>
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', borderRadius: '1rem', backgroundColor: 'white', border: '1px solid #e2e8f0' }}>
@@ -81,7 +81,7 @@ export default function ServiceDetailPage() {
         <div className="container">
           <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1.5rem' }}>Ready for a Spotless Home?</h2>
           <p style={{ fontSize: '1.5rem', opacity: 0.9, marginBottom: '3rem' }}>Join thousands of happy families in Riyadh.</p>
-          <Link href="https://wa.me/966500000000" style={{ backgroundColor: 'white', color: 'var(--primary)', padding: '1.25rem 3.5rem', borderRadius: '3rem', fontWeight: 800, textDecoration: 'none', fontSize: '1.125rem' }}>
+          <Link href="https://wa.me/966594847866" style={{ backgroundColor: 'white', color: 'var(--primary)', padding: '1.25rem 3.5rem', borderRadius: '3rem', fontWeight: 800, textDecoration: 'none', fontSize: '1.125rem' }}>
             Book Your {service.title} Now
           </Link>
         </div>

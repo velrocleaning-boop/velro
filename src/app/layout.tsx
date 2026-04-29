@@ -25,13 +25,20 @@ export const metadata: Metadata = {
   },
 };
 
+// Inline script runs synchronously before React hydrates — prevents dir/lang flash on reload
+const langInitScript = `(function(){try{var l=localStorage.getItem('velro-lang');if(l==='ar'){document.documentElement.setAttribute('dir','rtl');document.documentElement.setAttribute('lang','ar');}}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script dangerouslySetInnerHTML={{ __html: langInitScript }} />
+      </head>
       <body className={inter.variable} suppressHydrationWarning>
         <WebMCPProvider />
         <ClientLayout>

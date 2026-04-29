@@ -1,14 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-
-const NAV_LINKS = [
-  { href: "/why-us", label: "Why us" },
-  { href: "/services", label: "Services" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/how-it-works", label: "How it works" },
-  { href: "/about", label: "About Us" },
-];
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -17,6 +10,15 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
+
+  const navLinks = [
+    { href: "/why-us", labelKey: "nav.why_us" },
+    { href: "/services", labelKey: "nav.services" },
+    { href: "/pricing", labelKey: "nav.pricing" },
+    { href: "/how-it-works", labelKey: "nav.how_it_works" },
+    { href: "/about", labelKey: "nav.about" },
+  ];
 
   // Scroll lock
   useEffect(() => {
@@ -186,14 +188,14 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Nav Links */}
         <nav style={{ padding: "40px 32px", position: "relative", zIndex: 1 }}>
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <div key={link.href} className="mobile-nav-item">
               <Link
                 href={link.href}
                 className="mobile-nav-link"
                 onClick={onClose}
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             </div>
           ))}
@@ -210,7 +212,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           }}
         >
           <Link href="/book" className="mobile-book-btn" onClick={onClose}>
-            Book a Cleaner
+            {t('nav.book')}
           </Link>
           <div style={{
             display: "flex",
@@ -219,10 +221,10 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             marginTop: "12px",
           }}>
             <span style={{ fontSize: "12px", color: "#6b7280" }}>
-              <span style={{ color: "#3b4fd8", fontWeight: 700 }}>✓</span> No upfront payment
+              <span style={{ color: "#3b4fd8", fontWeight: 700 }}>✓</span> {t('mobile.no_upfront')}
             </span>
             <span style={{ fontSize: "12px", color: "#6b7280" }}>
-              <span style={{ color: "#3b4fd8", fontWeight: 700 }}>✓</span> Free cancellation
+              <span style={{ color: "#3b4fd8", fontWeight: 700 }}>✓</span> {t('mobile.free_cancel')}
             </span>
           </div>
         </div>

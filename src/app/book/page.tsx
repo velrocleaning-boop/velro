@@ -258,7 +258,7 @@ function BookingForm() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <a
-              href={`https://wa.me/966500000000?text=Hi Velro! My booking ID is %23${booking.id.split('-')[0].toUpperCase()} for ${encodeURIComponent(booking.service)} on ${booking.date}.`}
+              href={`https://wa.me/966594847866?text=Hi Velro! My booking ID is %23${booking.id.split('-')[0].toUpperCase()} for ${encodeURIComponent(booking.service)} on ${booking.date}.`}
               target="_blank"
               style={{ background: '#25D366', color: 'white', padding: '1rem', borderRadius: '1rem', fontWeight: 700, textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
             >

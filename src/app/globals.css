@@ -57,6 +57,7 @@ button {
   border-radius: 9999px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.9);
+  direction: ltr;
 }
 
 .nav-group {
@@ -281,6 +282,7 @@ button {
   display: flex;
   width: 100%;
   position: relative;
+  direction: ltr;
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
@@ -289,6 +291,7 @@ button {
   display: flex;
   gap: 4rem;
   width: max-content;
+  direction: ltr;
   /* Scroll left to right as requested */
   transform: translateX(-50%);
   animation: scroll-right 40s linear infinite;
@@ -883,6 +886,8 @@ button {
   margin-left: -50vw;
   margin-right: -50vw;
   padding: 1rem 0;
+  direction: ltr;
+  overflow: hidden;
   /* Soft fade on edges */
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
@@ -892,6 +897,7 @@ button {
   display: flex;
   gap: 1.5rem;
   width: max-content;
+  direction: ltr;
 }
 
 /* Duplicated content widths ensure seamless scroll */
@@ -1039,6 +1045,7 @@ button {
   .navbar-pill .logo-container {
     margin: 0 !important;
     order: 0;
+    margin-inline-end: auto !important;
   }
 
   .navbar-pill .logo-container img {
@@ -1047,6 +1054,16 @@ button {
 
   .nav-group {
     display: none !important;
+  }
+
+  .lang-switcher-wrap {
+    order: 1;
+    margin-inline-start: 0 !important;
+  }
+
+  .hamburger-btn {
+    order: 2;
+    margin-inline-start: 0.5rem;
   }
 
   /* Push page content below fixed header */
@@ -1972,6 +1989,8 @@ button {
 .services-marquee-track-wrapper {
   overflow: hidden;
   width: 100%;
+  position: relative;
+  direction: ltr;
   /* Soft fade left + right */
   mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
@@ -1980,16 +1999,12 @@ button {
 /* The scrolling flex row — 2 identical copies for seamless loop */
 .services-marquee-track {
   display: flex;
-  gap: 1.5rem;
+  flex-direction: row;
   width: max-content;
-  /* scroll exactly half = one full set of cards */
+  direction: ltr;
   animation: services-scroll 40s linear infinite;
+  animation-play-state: running !important;
   will-change: transform;
-}
-
-/* Pause on hover for accessibility */
-.services-marquee-track-wrapper:hover .services-marquee-track {
-  animation-play-state: paused;
 }
 
 @keyframes services-scroll {
@@ -2001,6 +2016,7 @@ button {
 .services-marquee-card {
   flex-shrink: 0;
   width: 280px;
+  margin-right: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3114,3 +3130,164 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================
+   MARQUEE — always visible, no scroll-reveal
+   animations.css hides these by default; override
+   so the infinite loop never has invisible gaps
+   ============================================ */
+.services-marquee-track .services-marquee-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(1) !important;
+  animation: none !important;
+}
+.marquee-row .review-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: none !important;
+}
+/* Restore hover image zoom (broken by animation: none above) */
+.services-marquee-card:hover .services-marquee-img {
+  transform: scale(1.07);
+}
+
+/* ============================================
+   RTL (Arabic) SUPPORT
+   ============================================ */
+
+/* Carousels always scroll LTR regardless of page direction */
+[dir="rtl"] .services-marquee-track-wrapper,
+[dir="rtl"] .services-marquee-track,
+[dir="rtl"] .marquee-wrapper,
+[dir="rtl"] .marquee-row,
+[dir="rtl"] .brands-marquee-wrapper,
+[dir="rtl"] .brands-track {
+  direction: ltr !important;
+}
+
+/* Arabic font — activated by dir="rtl" on <html> */
+[dir="rtl"] {
+  font-family: 'Tajawal', system-ui, sans-serif;
+}
+
+/* Smooth fade when switching languages */
+body.lang-switching * {
+  transition: opacity 0.15s ease !important;
+  opacity: 0.85 !important;
+  pointer-events: none;
+}
+
+/* --- Hero two-column layout --- */
+[dir="rtl"] .hero {
+  flex-direction: row-reverse;
+}
+
+/* --- Features "Why Choose Us" --- */
+[dir="rtl"] .features-top-row {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .features-col.left .feature-item-custom {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .features-col.left .feature-text-custom {
+  text-align: right;
+}
+[dir="rtl"] .features-col.right .feature-text-custom {
+  text-align: right;
+}
+[dir="rtl"] .features-bottom-row .feature-item-custom {
+  flex-direction: row-reverse;
+}
+
+/* --- Step cards --- */
+[dir="rtl"] .step-card {
+  text-align: right;
+}
+[dir="rtl"] .steps-grid {
+  direction: rtl;
+}
+
+/* --- Section headers --- */
+[dir="rtl"] .features-header,
+[dir="rtl"] .features-circular-header,
+[dir="rtl"] .reviews-header {
+  text-align: center;
+}
+
+/* --- Review cards --- */
+[dir="rtl"] .review-author {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .review-info {
+  text-align: right;
+}
+
+/* --- Booking form --- */
+[dir="rtl"] .dark-form-input,
+[dir="rtl"] .dark-form-select {
+  text-align: right;
+  direction: rtl;
+}
+/* Date, time, and tel inputs must always be LTR — browser native
+   chrome (dd/mm/yyyy, --:--, +966) breaks when direction:rtl is set */
+[dir="rtl"] input[type="date"].dark-form-input,
+[dir="rtl"] input[type="time"].dark-form-input,
+[dir="rtl"] input[type="tel"].dark-form-input,
+[dir="rtl"] input[type="number"].dark-form-input {
+  direction: ltr;
+  text-align: left;
+}
+/* Move select dropdown arrow to the left side in RTL so it
+   doesn't overlap the right-aligned Arabic text */
+[dir="rtl"] .dark-form-select {
+  background-position: left 1.25rem top 50%;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+}
+[dir="rtl"] .dark-form-group label {
+  text-align: right;
+  display: block;
+}
+
+/* --- Footer --- */
+[dir="rtl"] .footer-grid {
+  direction: rtl;
+}
+[dir="rtl"] .footer-bottom {
+  flex-direction: row-reverse;
+}
+[dir="rtl"] .footer-links {
+  text-align: right;
+}
+
+/* --- FAQ --- */
+[dir="rtl"] .faq-header {
+  text-align: center;
+}
+[dir="rtl"] .faq-answer-inner {
+  text-align: right;
+}
+
+/* --- Trust section --- */
+[dir="rtl"] .brands-wrapper p {
+  text-align: center;
+}
+
+/* --- General text direction for card content --- */
+[dir="rtl"] .step-card h3,
+[dir="rtl"] .step-card p,
+[dir="rtl"] .premium-booking-card h2,
+[dir="rtl"] .premium-booking-card p {
+  text-align: right;
+}
+[dir="rtl"] .hero-content {
+  text-align: right;
+}
+[dir="rtl"] .hero-subtitle {
+  text-align: right;
+}
+[dir="rtl"] .hero-title {
+  text-align: right;
+}
+

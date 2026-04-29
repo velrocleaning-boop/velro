@@ -46,7 +46,7 @@ function baseTemplate(title: string, content: string): string {
     </div>
     <div style="background:#f8fafc;padding:16px;text-align:center;font-size:12px;color:#94a3b8">
       <p>Velro Cleaning Services | Riyadh, Saudi Arabia</p>
-      <p>WhatsApp: +966 50 000 0000 | support@velro.sa</p>
+      <p>WhatsApp: +966 59 484 7866 | support@velro.sa</p>
     </div>
   </div>
 </body>

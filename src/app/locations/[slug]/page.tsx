@@ -78,7 +78,7 @@ export default function LocationPage() {
             <div style={{ backgroundColor: '#f8fafc', padding: '3rem', borderRadius: '2rem', border: '1px solid #e2e8f0' }}>
               <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '1rem' }}>Available Today in {location.name}</h3>
               <p style={{ marginBottom: '2rem', color: '#64748b' }}>Check instant pricing and availability for {location.name} neighborhood.</p>
-              <Link href="https://wa.me/966500000000" style={{ 
+              <Link href="https://wa.me/966594847866" style={{ 
                 display: 'block', 
                 textAlign: 'center', 
                 backgroundColor: 'var(--primary)', 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { HelpCircle, Plus, Minus, X, Menu, CheckCircle2, MapPin, Star, ShieldCheck, Clock, Sparkles, Droplets, Home, Activity, Leaf, Trees, Layers, Building2, BookOpenText, Award, CalendarDays, Smartphone, UserCheck, Headset, Timer } from "lucide-react";
 import "./animations.css";
 import { useScrollAnimations } from "@/hooks/useAnimations";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const saudiBrands = [
   { name: "KINGDOM HOSPITAL", color: "#2d6639", Icon: Activity },
@@ -15,16 +16,6 @@ const saudiBrands = [
   { name: "JARIR BOOKSTORE", color: "#E02020", Icon: BookOpenText },
 ];
 
-const faqs = [
-  { question: "What exactly does Velro clean?", answer: "We offer comprehensive cleaning across Riyadh. Our standard clean covers dusting, mopping, vacuuming, and wiping down all surfaces in your bedrooms, bathrooms, kitchen, and living areas. For deeper needs, we offer deep-cleaning and move-in/out services." },
-  { question: "How do I book a cleaning service?", answer: "Simply select your district in Riyadh (e.g., Al Olaya, Hittin, Al Malqa) from our header, choose your service type, and see your instant pricing. You can book an appointment entirely online in under 60 seconds." },
-  { question: "Can I book a recurring service?", answer: "Yes! While checking out, you can schedule weekly, bi-weekly, or monthly cleaning sessions. Recurring customers often receive priority booking and special rates." },
-  { question: "How can I trust your professionals?", answer: "Every cleaner at Velro undergoes a rigorous background check, professional training, and continuous evaluation. We're trusted by thousands of homes in Riyadh and back our work with a 100% Satisfaction Guarantee." },
-  { question: "How are your services priced?", answer: "Our standard pricing starts around 50 SAR per hour. Final pricing depends heavily on your apartment/villa size and selected add-ons. We provide exact, transparent, upfront quotes before you book — no hidden fees." },
-  { question: "Do I need to provide cleaning supplies?", answer: "No, our professionals come fully equipped with high-quality, safe cleaning materials to ensure your home is spotless." },
-  { question: "Where in Riyadh do you operate?", answer: "We cover almost all major neighborhoods in Riyadh, including North Riyadh (Al Malqa, Al Yasmin, An Narjis), Central (Al Olaya, As Sulimaniyah), and many more." }
-];
-
 const servicesList = [
   { name: "Bathroom Cleaning", img: "/services/bathroom-cleaning.webp" },
   { name: "Kitchen Cleaning", img: "/services/kitchen-cleaning.webp" },
@@ -33,7 +24,17 @@ const servicesList = [
   { name: "Sofa & Upholstery", img: "/services/sofa-cleaning.webp" },
   { name: "Balcony Cleaning", img: "/services/balcony-cleaning.webp" },
   { name: "Laundry Service", img: "/services/laundry-cleaning.webp" },
-  { name: "Utensils & Dishes", img: "/services/utensils-cleaning.webp" }
+  { name: "Utensils & Dishes", img: "/services/utensils-cleaning.webp" },
+];
+
+const faqKeys = [
+  { q: "faq.q1", a: "faq.a1" },
+  { q: "faq.q2", a: "faq.a2" },
+  { q: "faq.q3", a: "faq.a3" },
+  { q: "faq.q4", a: "faq.a4" },
+  { q: "faq.q5", a: "faq.a5" },
+  { q: "faq.q6", a: "faq.a6" },
+  { q: "faq.q7", a: "faq.a7" },
 ];
 
 const row1Reviews = [
@@ -80,6 +81,9 @@ export default function HomePage() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   useScrollAnimations();
+  const { t } = useTranslation();
+
+  const faqs = faqKeys.map(({ q, a }) => ({ question: t(q), answer: t(a) }));
 
   const SERVICE_SLUGS: Record<string, string> = {
     'Standard Cleaning': 'standard-cleaning',
@@ -90,11 +94,11 @@ export default function HomePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone || !formData.date || !formData.time) {
-      alert("Please fill all required fields (Name, Phone, Date, Time)");
+      alert(t('booking.alert_required'));
       return;
     }
     if (!formData.district) {
-      alert("Please select a neighborhood");
+      alert(t('booking.alert_district'));
       return;
     }
     setStatus('loading');
@@ -113,7 +117,7 @@ export default function HomePage() {
           notes: `Workers requested: ${formData.workers}`
         }),
       });
-      
+
       if (res.ok) {
         setStatus('success');
         setFormData({ name: '', phone: '', email: '', district: '', service: 'Standard Cleaning', workers: '1 Cleaner', date: '', time: '' });
@@ -140,37 +144,27 @@ export default function HomePage() {
             <div className="hero-content" style={{ position: "relative", zIndex: 1 }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'linear-gradient(135deg, #eef0ff, #e0e4ff)', padding: '0.65rem 1.25rem', borderRadius: '2rem', marginBottom: '1rem', fontWeight: 600, color: '#1a1f5e', fontSize: '0.875rem', border: '1px solid #a5aeff', boxShadow: '0 0 0 4px rgba(59,79,216,0.08)', animation: 'slideDown 0.5s ease-out both' }}>
               <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#f59e0b' }}></div>
-              Rated #1 on Google & Trustpilot by 5,000+ Riyadh Homes
+              {t('hero.badge')}
             </div>
-            
+
             <h1 className="hero-title" style={{ fontSize: '3.1rem', lineHeight: 1.15, marginBottom: '0.75rem', letterSpacing: '-0.5px', fontWeight: 900 }}>
-              <span style={{ display: 'block', animation: 'fadeInUp 0.5s ease-out 0.2s both' }}>Come home to a spotless space.</span>
-              <span style={{ display: 'block', animation: 'fadeInUp 0.5s ease-out 0.45s both', color: '#3b4fd8' }}>100% Guaranteed.</span>
+              <span style={{ display: 'block', animation: 'fadeInUp 0.5s ease-out 0.2s both' }}>{t('hero.title1')}</span>
+              <span style={{ display: 'block', animation: 'fadeInUp 0.5s ease-out 0.45s both', color: '#3b4fd8' }}>{t('hero.title2')}</span>
             </h1>
-            
+
             <p className="hero-subtitle" style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#4b5563', lineHeight: 1.6 }}>
-              Enjoy your free time while our vetted professionals handle the mess. <strong>Starting at 50 SAR/hour.</strong> Zero stress, zero hassle.
+              {t('hero.subtitle')} <strong>{t('hero.starting')}</strong> {t('hero.zero_stress')}
             </p>
-            
+
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.25rem 0', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '1.125rem', color: 'var(--text-main)', fontWeight: 600 }}>
-              <li style={{ background: '#ffffff', border: '1px solid #e8eaff', borderRadius: '10px', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '10px', animation: 'slideInLeft 0.5s ease-out 0.85s both' }}>
-                <div style={{ width: '20px', height: '20px', background: '#3b4fd8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                </div>
-                Vetted, trained & insured professionals
-              </li>
-              <li style={{ background: '#ffffff', border: '1px solid #e8eaff', borderRadius: '10px', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '10px', animation: 'slideInLeft 0.5s ease-out 1.0s both' }}>
-                <div style={{ width: '20px', height: '20px', background: '#3b4fd8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                </div>
-                100% Satisfaction guarantee or we clean again
-              </li>
-              <li style={{ background: '#ffffff', border: '1px solid #e8eaff', borderRadius: '10px', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '10px', animation: 'slideInLeft 0.5s ease-out 1.15s both' }}>
-                <div style={{ width: '20px', height: '20px', background: '#3b4fd8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                </div>
-                No upfront payment required
-              </li>
+              {(['check1', 'check2', 'check3'] as const).map((k, idx) => (
+                <li key={k} style={{ background: '#ffffff', border: '1px solid #e8eaff', borderRadius: '10px', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '10px', animation: `slideInLeft 0.5s ease-out ${0.85 + idx * 0.15}s both` }}>
+                  <div style={{ width: '20px', height: '20px', background: '#3b4fd8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  {t(`hero.${k}`)}
+                </li>
+              ))}
             </ul>
 
             <div style={{ background: '#ffffff', border: '1px solid #e8eaff', borderRadius: '12px', padding: '10px 14px', display: 'inline-flex', alignItems: 'center', gap: '1.25rem', marginTop: '18px', animation: 'fadeInScale 0.6s ease-out 1.3s both' }}>
@@ -187,7 +181,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <span style={{ color: '#4b5563', fontSize: '0.95rem', fontWeight: 500 }}>
-                  <strong style={{ color: 'var(--text-main)' }}>4.9/5</strong> rating. "Best deep cleaning in Riyadh!"
+                  <strong style={{ color: 'var(--text-main)' }}>4.9/5</strong> {t('hero.rating_text')}
                 </span>
               </div>
             </div>
@@ -195,64 +189,64 @@ export default function HomePage() {
 
           <div className="premium-booking-card" id="booking-form">
             <div style={{ height: '4px', background: 'linear-gradient(90deg, #3b4fd8, #7c8bff)', borderRadius: '12px 12px 0 0', margin: '-1.5rem -2rem 16px -2rem' }}></div>
-            <span style={{ background: '#eef0ff', color: '#1a1f5e', padding: '3px 10px', borderRadius: '6px', fontSize: '10px', display: 'inline-block', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>Instant Booking</span>
-            <h2>Reserve Your Cleaner</h2>
-            <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '2px', marginBottom: '14px' }}>Next available in Riyadh: today in 2 hours</p>
-            
+            <span style={{ background: '#eef0ff', color: '#1a1f5e', padding: '3px 10px', borderRadius: '6px', fontSize: '10px', display: 'inline-block', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>{t('booking.label')}</span>
+            <h2>{t('booking.title')}</h2>
+            <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '2px', marginBottom: '14px' }}>{t('booking.availability')}</p>
+
             {status === 'success' ? (
               <div style={{ textAlign: 'center', padding: '2rem 0' }}>
                 <div style={{ width: '64px', height: '64px', backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
                   <CheckCircle2 size={32} />
                 </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>Booking Received!</h3>
-                <p style={{ color: '#94a3b8', marginBottom: '1.5rem' }}>Our team will contact you on WhatsApp shortly.</p>
-                <button onClick={() => setStatus('idle')} className="btn-success-large">Book Another</button>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>{t('booking.success_title')}</h3>
+                <p style={{ color: '#94a3b8', marginBottom: '1.5rem' }}>{t('booking.success_msg')}</p>
+                <button onClick={() => setStatus('idle')} className="btn-success-large">{t('booking.book_another')}</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
                 <div className="dark-form-grid">
                   <div className="dark-form-group">
-                    <label>Name</label>
-                    <input 
-                      type="text" 
-                      required 
-                      placeholder="Enter your name" 
-                      className="dark-form-input" 
+                    <label>{t('booking.name')}</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder={t('booking.name_placeholder')}
+                      className="dark-form-input"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
                     />
                   </div>
                   <div className="dark-form-group">
-                    <label>Phone</label>
-                    <input 
-                      type="tel" 
-                      required 
-                      placeholder="+966" 
-                      className="dark-form-input" 
+                    <label>{t('booking.phone')}</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+966"
+                      className="dark-form-input"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     />
                   </div>
-                  
+
                   <div className="dark-form-group">
-                    <label>Email</label>
-                    <input 
-                      type="email" 
-                      placeholder="Optional" 
-                      className="dark-form-input" 
+                    <label>{t('booking.email')}</label>
+                    <input
+                      type="email"
+                      placeholder={t('booking.email_placeholder')}
+                      className="dark-form-input"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
                     />
                   </div>
                   <div className="dark-form-group">
-                    <label>District</label>
-                    <select 
-                      className="dark-form-input dark-form-select" 
+                    <label>{t('booking.district')}</label>
+                    <select
+                      className="dark-form-input dark-form-select"
                       value={formData.district}
                       onChange={(e) => setFormData({...formData, district: e.target.value})}
                       required
                     >
-                      <option value="" disabled>Select District...</option>
+                      <option value="" disabled>{t('booking.district_placeholder')}</option>
                       <option value="olaya">Al Olaya</option>
                       <option value="malqa">Al Malqa</option>
                       <option value="hittin">Hittin</option>
@@ -274,47 +268,47 @@ export default function HomePage() {
                   </div>
 
                   <div className="dark-form-group">
-                    <label>Service</label>
-                    <select 
-                      className="dark-form-input dark-form-select" 
+                    <label>{t('booking.service')}</label>
+                    <select
+                      className="dark-form-input dark-form-select"
                       value={formData.service}
                       onChange={(e) => setFormData({...formData, service: e.target.value})}
                     >
-                      <option value="Standard Cleaning">Standard</option>
-                      <option value="Deep Cleaning">Deep</option>
-                      <option value="Move-in/out">Move-in/out</option>
+                      <option value="Standard Cleaning">{t('booking.svc_standard')}</option>
+                      <option value="Deep Cleaning">{t('booking.svc_deep')}</option>
+                      <option value="Move-in/out">{t('booking.svc_moveinout')}</option>
                     </select>
                   </div>
                   <div className="dark-form-group">
-                    <label>Workers</label>
-                    <select 
-                      className="dark-form-input dark-form-select" 
+                    <label>{t('booking.workers')}</label>
+                    <select
+                      className="dark-form-input dark-form-select"
                       value={formData.workers}
                       onChange={(e) => setFormData({...formData, workers: e.target.value})}
                     >
-                      <option value="1 Cleaner">1 Cleaner</option>
-                      <option value="2 Cleaners">2 Cleaners</option>
-                      <option value="3 Cleaners">3 Cleaners</option>
-                      <option value="4+ Cleaners">4+ Cleaners</option>
+                      <option value="1 Cleaner">{t('booking.w1')}</option>
+                      <option value="2 Cleaners">{t('booking.w2')}</option>
+                      <option value="3 Cleaners">{t('booking.w3')}</option>
+                      <option value="4+ Cleaners">{t('booking.w4')}</option>
                     </select>
                   </div>
 
                   <div className="dark-form-group">
-                    <label>Date</label>
-                    <input 
-                      type="date" 
-                      required 
-                      className="dark-form-input" 
+                    <label>{t('booking.date')}</label>
+                    <input
+                      type="date"
+                      required
+                      className="dark-form-input"
                       value={formData.date}
                       onChange={(e) => setFormData({...formData, date: e.target.value})}
                     />
                   </div>
                   <div className="dark-form-group">
-                    <label>Time</label>
-                    <input 
-                      type="time" 
-                      required 
-                      className="dark-form-input" 
+                    <label>{t('booking.time')}</label>
+                    <input
+                      type="time"
+                      required
+                      className="dark-form-input"
                       value={formData.time}
                       onChange={(e) => setFormData({...formData, time: e.target.value})}
                     />
@@ -323,7 +317,7 @@ export default function HomePage() {
 
                 {status === 'error' && (
                   <div style={{ padding: '0.75rem 1rem', background: 'rgba(220, 38, 38, 0.1)', border: '1px solid rgba(220, 38, 38, 0.3)', borderRadius: '0.5rem', color: '#fca5a5', fontSize: '0.875rem', fontWeight: 600, marginBottom: '1rem' }}>
-                    Something went wrong. Please try again.
+                    {t('booking.error_label')}
                   </div>
                 )}
 
@@ -332,15 +326,15 @@ export default function HomePage() {
                   type="submit"
                   disabled={status === 'loading'}
                 >
-                  {status === 'loading' ? 'Processing...' : 'Get Quote Instantly'}
+                  {status === 'loading' ? t('booking.processing') : t('booking.submit')}
                 </button>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginTop: '6px' }}>
                   <span style={{ fontSize: '10px', color: '#6b7280', display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <span style={{ width: '6px', height: '6px', background: '#10b981', borderRadius: '50%', display: 'inline-block' }}></span>
-                    No upfront payment
+                    {t('booking.no_upfront')}
                   </span>
                   <span style={{ fontSize: '10px', color: '#d1d5db' }}>·</span>
-                  <span style={{ fontSize: '10px', color: '#6b7280' }}>Free cancellation</span>
+                  <span style={{ fontSize: '10px', color: '#6b7280' }}>{t('booking.free_cancel')}</span>
                 </div>
               </form>
             )}
@@ -352,7 +346,7 @@ export default function HomePage() {
         {/* TRUST SECTION */}
         <section className="trust-brands">
           <div className="container obs-hide brands-wrapper">
-            <p>Trusted by homeowners across Riyadh, Saudi Arabia</p>
+            <p>{t('trust.text')}</p>
           </div>
           <div className="brands-marquee-wrapper">
             <div className="brands-track">
@@ -373,25 +367,25 @@ export default function HomePage() {
         <section id="how-it-works" className="how-it-works">
           <div className="container">
             <div className="features-header">
-              <h2>How it works</h2>
-              <p>Your spotless home is just a few clicks away</p>
+              <h2>{t('how.title')}</h2>
+              <p>{t('how.subtitle')}</p>
             </div>
-            
+
             <div className="steps-grid">
               <div className="step-card obs-hide" style={{ animationDelay: "0s" }}>
                 <div className="step-number">1</div>
-                <h3>Book instantly</h3>
-                <p>Select your date, time, and service level online. See clear pricing with no hidden fees.</p>
+                <h3>{t('how.step1_title')}</h3>
+                <p>{t('how.step1_desc')}</p>
               </div>
               <div className="step-card obs-hide" style={{ animationDelay: "0.2s" }}>
                 <div className="step-number">2</div>
-                <h3>We clean it</h3>
-                <p>A fully equipped, vetted professional arrives and makes your home sparkle.</p>
+                <h3>{t('how.step2_title')}</h3>
+                <p>{t('how.step2_desc')}</p>
               </div>
               <div className="step-card obs-hide" style={{ animationDelay: "0.4s" }}>
                 <div className="step-number">3</div>
-                <h3>You relax</h3>
-                <p>Enjoy your newly clean space and more free time. Pay securely only after the job is done.</p>
+                <h3>{t('how.step3_title')}</h3>
+                <p>{t('how.step3_desc')}</p>
               </div>
             </div>
           </div>
@@ -401,36 +395,36 @@ export default function HomePage() {
         <section className="features-circular" id="why-us">
           <div className="container">
             <div className="features-circular-header">
-              <h2><em>WHY</em> CHOOSE US</h2>
+              <h2><em>{t('why.title')}</em></h2>
               <div className="header-underline"></div>
-              <p>One stop. Many solutions. Total peace of mind.</p>
+              <p>{t('why.subtitle')}</p>
             </div>
 
             <div className="custom-features-wrapper">
-              
+
               {/* TOP ROW: 3 Columns */}
               <div className="features-top-row">
-                
+
                 {/* Left Column (3 items) */}
                 <div className="features-col left">
                   <div className="feature-item-custom obs-hide" style={{ animationDelay: '0.0s' }}>
                     <div className="feature-text-custom">
-                      <h4>Certified Professional Cleaners</h4>
-                      <p>Vetted, experienced, and continuously trained experts.</p>
+                      <h4>{t('why.f1_title')}</h4>
+                      <p>{t('why.f1_desc')}</p>
                     </div>
                     <div className="feature-icon-custom"><Award size={24} /></div>
                   </div>
                   <div className="feature-item-custom obs-hide" style={{ animationDelay: '0.1s' }}>
                     <div className="feature-text-custom">
-                      <h4>Environmentally Friendly Cleaning</h4>
-                      <p>Premium, safe products that protect your entire family.</p>
+                      <h4>{t('why.f2_title')}</h4>
+                      <p>{t('why.f2_desc')}</p>
                     </div>
                     <div className="feature-icon-custom"><Leaf size={24} /></div>
                   </div>
                   <div className="feature-item-custom obs-hide" style={{ animationDelay: '0.2s' }}>
                     <div className="feature-text-custom">
-                      <h4>100% Satisfaction Guaranteed</h4>
-                      <p>We're not satisfied until you're absolutely thrilled.</p>
+                      <h4>{t('why.f3_title')}</h4>
+                      <p>{t('why.f3_desc')}</p>
                     </div>
                     <div className="feature-icon-custom"><ShieldCheck size={24} /></div>
                   </div>
@@ -447,22 +441,22 @@ export default function HomePage() {
                   <div className="feature-item-custom obs-hide" style={{ animationDelay: '0.3s' }}>
                     <div className="feature-icon-custom"><Smartphone size={24} /></div>
                     <div className="feature-text-custom">
-                      <h4>One-Stop Convenience</h4>
-                      <p>Book, manage, and pay seamlessly entirely online.</p>
+                      <h4>{t('why.f4_title')}</h4>
+                      <p>{t('why.f4_desc')}</p>
                     </div>
                   </div>
                   <div className="feature-item-custom obs-hide" style={{ animationDelay: '0.4s' }}>
                     <div className="feature-icon-custom"><UserCheck size={24} /></div>
                     <div className="feature-text-custom">
-                      <h4>Police-Checked Professionals</h4>
-                      <p>We thoroughly verify every cleaner for your peace of mind.</p>
+                      <h4>{t('why.f5_title')}</h4>
+                      <p>{t('why.f5_desc')}</p>
                     </div>
                   </div>
                   <div className="feature-item-custom obs-hide" style={{ animationDelay: '0.5s' }}>
                     <div className="feature-icon-custom"><Headset size={24} /></div>
                     <div className="feature-text-custom">
-                      <h4>24/7 Customer Support</h4>
-                      <p>Our friendly local team is here to help you 7 days a week.</p>
+                      <h4>{t('why.f6_title')}</h4>
+                      <p>{t('why.f6_desc')}</p>
                     </div>
                   </div>
                 </div>
@@ -474,15 +468,15 @@ export default function HomePage() {
                 <div className="feature-item-custom obs-hide" style={{ animationDelay: '0.6s' }}>
                   <div className="feature-icon-custom"><CalendarDays size={24} /></div>
                   <div className="feature-text-custom">
-                    <h4>Available Evenings<br/>&amp; Weekends</h4>
-                    <p>Flexible scheduling to perfectly suit your busy lifestyle.</p>
+                    <h4>{t('why.f7_title')}</h4>
+                    <p>{t('why.f7_desc')}</p>
                   </div>
                 </div>
                 <div className="feature-item-custom obs-hide" style={{ animationDelay: '0.7s' }}>
                   <div className="feature-icon-custom"><Timer size={24} /></div>
                   <div className="feature-text-custom">
-                    <h4>Book In 60 Seconds</h4>
-                    <p>A streamlined online booking process so you can relax faster.</p>
+                    <h4>{t('why.f8_title')}</h4>
+                    <p>{t('why.f8_desc')}</p>
                   </div>
                 </div>
               </div>
@@ -494,20 +488,19 @@ export default function HomePage() {
         {/* SERVICES MARQUEE */}
         <section id="services" className="services-marquee-section">
           <div className="container" style={{ textAlign: 'center' }}>
-            <div className="section-eyebrow">What We Clean</div>
+            <div className="section-eyebrow">{t('services.eyebrow')}</div>
             <h2 className="services-marquee-title">
-              Book trusted <span>cleaning help</span>
+              {t('services.title_part1')} <span>{t('services.title_highlighted')}</span>
             </h2>
             <p className="services-marquee-subtitle">
-              From deep cleans to daily upkeep, Velro&apos;s got you covered
+              {t('services.subtitle')}
             </p>
           </div>
 
           <div className="services-marquee-track-wrapper">
             <div className="services-marquee-track">
-              {/* Two identical copies for seamless infinite loop */}
               {[...servicesList, ...servicesList].map((service, i) => (
-                <div key={i} className="services-marquee-card obs-hide" style={{ animationDelay: `${(i % 8) * 0.08}s` }}>
+                <div key={i} className="services-marquee-card">
                   <div className="services-marquee-img-wrap">
                     <img src={service.img} alt={service.name} className="services-marquee-img" />
                     <div className="services-marquee-overlay">
@@ -524,14 +517,14 @@ export default function HomePage() {
         {/* REVIEWS SECTION */}
         <section className="reviews-section">
           <div className="reviews-header">
-            <h2>User reviews and feedback</h2>
-            <p>See how Velro has transformed users' experiences through their own words</p>
+            <h2>{t('reviews.title')}</h2>
+            <p>{t('reviews.subtitle')}</p>
           </div>
           <div className="marquee-wrapper">
             <div className="marquee-row left">
               {[...row1Reviews, ...row1Reviews].map((review, i) => (
-                <div key={i} className="review-card obs-hide" style={{ animationDelay: `${(i % 6) * 0.12}s` }}>
-                  <div className="quote-icon">”</div>
+                <div key={i} className="review-card">
+                  <div className="quote-icon">"</div>
                   <div className="review-author">
                     <img src={review.avatar} alt={review.name} className="review-avatar" />
                     <div className="review-info">
@@ -545,8 +538,8 @@ export default function HomePage() {
             </div>
             <div className="marquee-row right">
               {[...row2Reviews, ...row2Reviews].map((review, i) => (
-                <div key={i} className="review-card obs-hide" style={{ animationDelay: `${(i % 6) * 0.12}s` }}>
-                  <div className="quote-icon">”</div>
+                <div key={i} className="review-card">
+                  <div className="quote-icon">"</div>
                   <div className="review-author">
                     <img src={review.avatar} alt={review.name} className="review-avatar" />
                     <div className="review-info">
@@ -566,24 +559,24 @@ export default function HomePage() {
           <div className="container" style={{ maxWidth: '850px', margin: '0 auto', padding: 0 }}>
             <div className="obs-hide faq-header" style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', border: '1px solid #e5e7eb', padding: '0.5rem 1rem', borderRadius: '2rem', marginBottom: '1.5rem', fontSize: '0.875rem', fontWeight: 600, color: '#374151' }}>
-                <HelpCircle size={16} /> FAQ's
+                <HelpCircle size={16} /> {t('faq.label')}
               </div>
-              <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 800, color: '#111827', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Frequently Asked Questions</h2>
+              <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 800, color: '#111827', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{t('faq.title')}</h2>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {faqs.map((faq, index) => (
                 <div key={index} style={{ backgroundColor: '#f8fafc', borderRadius: '1rem', overflow: 'hidden', border: '1px solid #f1f5f9' }}>
-                  <button 
+                  <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
                     style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 1.75rem', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
                   >
                     <span style={{ fontSize: '1.15rem', fontWeight: 700, color: '#1f2937' }}>{faq.question}</span>
-                    <div style={{ minWidth: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#374151', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', transition: 'all 0.2s', transform: openFaq === index ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                    <div style={{ minWidth: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#374151', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', transition: 'all 0.2s', transform: openFaq === index ? 'rotate(180deg)' : 'rotate(0deg)', marginInlineStart: '1rem' }}>
                       {openFaq === index ? <Minus size={20} /> : <Plus size={20} />}
                     </div>
                   </button>
-                  
+
                   <div className={`faq-answer ${openFaq === index ? "open" : ""}`}>
                     <div className="faq-answer-inner" style={{ padding: "0 1.75rem 1.75rem 1.75rem", fontSize: "1.05rem", color: "#4b5563", lineHeight: 1.6 }}>
                       {faq.answer}
@@ -598,9 +591,9 @@ export default function HomePage() {
         {/* CTA SECTION */}
         <section className="cta-section">
           <div className="container obs-hide cta-header">
-            <h2>Ready for a cleaner home?</h2>
-            <p>Join thousands of happy homeowners in Riyadh and reclaim your weekends. Book your first cleaning in 60 seconds.</p>
-            <Link href="/book" className="btn cta-shimmer-btn">Book Your Cleaner Now</Link>
+            <h2>{t('cta.title')}</h2>
+            <p>{t('cta.subtitle')}</p>
+            <Link href="/book" className="btn cta-shimmer-btn">{t('cta.button')}</Link>
           </div>
         </section>
 
