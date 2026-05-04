@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const SETTINGS_SECTIONS = [
   {
@@ -11,7 +11,7 @@ const SETTINGS_SECTIONS = [
       { key: 'business_phone', label: 'Phone', type: 'text', default: '+966 59 484 7866' },
       { key: 'business_email', label: 'Email', type: 'email', default: 'hello@velro.services' },
       { key: 'business_address', label: 'Address', type: 'text', default: 'Riyadh, Saudi Arabia' },
-      { key: 'vat_number', label: 'VAT Number', type: 'text', default: '' },
+      { key: 'vat_number', label: 'VAT Number', type: 'text', default: '314418368500003' },
       { key: 'vat_rate', label: 'VAT Rate (%)', type: 'number', default: '15' },
     ],
   },
@@ -73,6 +73,21 @@ export default function SettingsPage() {
 
   const section = SETTINGS_SECTIONS.find(s => s.key === activeSection)!;
 
+  useEffect(() => {
+    fetch('/api/admin/settings')
+      .then(r => r.json())
+      .then(res => {
+        if (res.data) {
+          const loaded: Record<string, string> = {};
+          for (const [k, v] of Object.entries(res.data as Record<string, { value: unknown }>)) {
+            loaded[k] = String((v as { value: unknown }).value ?? '');
+          }
+          setValues(loaded);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const getValue = (key: string, def: string) => values[key] ?? def;
 
   const handleChange = (key: string, val: string) => {
@@ -82,7 +97,15 @@ export default function SettingsPage() {
 
   const handleSave = async () => {
     setSaving(true);
-    await new Promise(r => setTimeout(r, 600));
+    const updates: Record<string, string> = {};
+    for (const field of section.fields) {
+      updates[field.key] = getValue(field.key, field.default);
+    }
+    await fetch('/api/admin/settings', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ updates }),
+    });
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);

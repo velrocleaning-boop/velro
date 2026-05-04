@@ -158,7 +158,8 @@ export async function sendInvoiceEmail(
   },
   items: { description: string; qty: number; unitPrice: number }[],
   totals: { subtotal: number; vat: number; discount: number; total: number },
-  notes?: string
+  notes?: string,
+  vatNumber = '314418368500003'
 ): Promise<boolean> {
   const invoiceNumber = `INV-${booking.id.split('-')[0].toUpperCase()}`;
   const itemRows = items.map((item, i) =>
@@ -179,7 +180,7 @@ export async function sendInvoiceEmail(
     <div>
       <div style="font-size:28px;font-weight:900;color:#fff;letter-spacing:-1px">VELRO</div>
       <div style="color:#94a3b8;font-size:13px;margin-top:4px">Cleaning Services · Riyadh, KSA</div>
-      <div style="color:#64748b;font-size:12px;margin-top:2px">VAT Reg: 300000000000003</div>
+      <div style="color:#64748b;font-size:12px;margin-top:2px">VAT Reg: ${vatNumber}</div>
     </div>
     <div style="text-align:right">
       <div style="color:#94a3b8;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px">Tax Invoice</div>

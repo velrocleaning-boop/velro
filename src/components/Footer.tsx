@@ -52,7 +52,7 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} {t('footer.copyright')}</p>
           <div style={{ display: "flex", gap: "1.5rem" }}>
             <a href="https://www.instagram.com/velro.riyadh" target="_blank" rel="noopener noreferrer">{t('footer.instagram')}</a>
-            <a href="https://www.linkedin.com/company/velro.riyadh" target="_blank" rel="noopener noreferrer">{t('footer.linkedin')}</a>
+            <a href="https://www.linkedin.com/company/velroservices" target="_blank" rel="noopener noreferrer">{t('footer.linkedin')}</a>
             <a href="https://www.facebook.com/velro.riyadh" target="_blank" rel="noopener noreferrer">{t('footer.facebook')}</a>
           </div>
         </div>

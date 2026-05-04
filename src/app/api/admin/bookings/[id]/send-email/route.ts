@@ -28,11 +28,18 @@ export async function POST(request: NextRequest, props: { params: Promise<{ id: 
     return NextResponse.json({ error: 'This booking has no email address' }, { status: 400 });
   }
 
+  const { data: vatSetting } = await supabaseAdmin
+    .from('system_settings')
+    .select('value')
+    .eq('key', 'vat_number')
+    .single();
+  const vatNumber = (vatSetting?.value as string) || '314418368500003';
+
   let ok = false;
   if (type === 'quote') {
     ok = await sendQuotationEmail(to, booking, items, totals, validUntil, notes);
   } else {
-    ok = await sendInvoiceEmail(to, booking, items, totals, notes);
+    ok = await sendInvoiceEmail(to, booking, items, totals, notes, vatNumber);
   }
 
   if (!ok) {

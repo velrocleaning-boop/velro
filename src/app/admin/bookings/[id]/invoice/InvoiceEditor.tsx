@@ -11,11 +11,12 @@ interface LineItem {
 interface Props {
   booking: any;
   type: 'invoice' | 'quote';
+  vatNumber?: string;
 }
 
 function uid() { return Math.random().toString(36).slice(2); }
 
-export default function InvoiceEditor({ booking, type }: Props) {
+export default function InvoiceEditor({ booking, type, vatNumber = '314418368500003' }: Props) {
   const isQuote = type === 'quote';
   const docNumber = isQuote
     ? `QTE-${booking.id.split('-')[0].toUpperCase()}`
@@ -183,7 +184,7 @@ export default function InvoiceEditor({ booking, type }: Props) {
           <div>
             <div style={{ fontSize: '2.2rem', fontWeight: 900, color: '#fff', letterSpacing: '-0.04em' }}>VELRO</div>
             <div style={{ color: isQuote ? '#93c5fd' : '#94a3b8', fontSize: '0.875rem', marginTop: '4px' }}>Cleaning Services · Riyadh, KSA</div>
-            <div style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '2px' }}>VAT Reg: 300000000000003</div>
+            <div style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '2px' }}>VAT Reg: {vatNumber}</div>
             <div style={{ color: '#64748b', fontSize: '0.8rem' }}>velrocleaning@gmail.com</div>
           </div>
           <div style={{ textAlign: 'right' }}>
