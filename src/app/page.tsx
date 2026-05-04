@@ -38,21 +38,21 @@ const faqKeys = [
 ];
 
 const row1Reviews = [
-  { name: "Tariq Al-Otaibi", location: "Al Malqa", text: "Great work, my home was left spotless and fresh. They scrubbed the floors perfectly and dusted every corner. I'll definitely recommend them. 👍" },
-  { name: "Fatima Al-Dosari", location: "Al Olaya", text: "The cleaners did an incredible job with the kitchen grease and bathroom tiles. Really satisfied with the deep cleaning quality. Worth every riyal." },
-  { name: "Youssef Al-Fayed", location: "Hittin", text: "Absolutely excellent service! The team was professional, extremely polite, and left my carpets and windows looking brand new." },
-  { name: "Noura Al-Saud", location: "As Sulimaniyah", text: "Booking directly on their website was seamless. They removed stains from my sofa that I thought were permanent. Thank you Velro!" },
-  { name: "Khalid Al-Sheri", location: "An Narjis", text: "Really impressive compared to other companies I've tried. They came exactly on time, brought premium supplies, and left the living room shining." },
-  { name: "Sara Al-Hassan", location: "Al Yasmin", text: "Exceptional service! They managed to clean tough stains in the kitchen that I struggled with for months. Will book a bi-weekly service now." },
+  { name: "Tariq Al-Otaibi", location: "Al Malqa", photo: "/reviews/tariq.jpg", text: "Great work, my home was left spotless and fresh. They scrubbed the floors perfectly and dusted every corner. I'll definitely recommend them. 👍" },
+  { name: "Fatima Al-Dosari", location: "Al Olaya", photo: "/reviews/fatima.jpg", text: "The cleaners did an incredible job with the kitchen grease and bathroom tiles. Really satisfied with the deep cleaning quality. Worth every riyal." },
+  { name: "Youssef Al-Fayed", location: "Hittin", photo: "/reviews/youssef.jpg", text: "Absolutely excellent service! The team was professional, extremely polite, and left my carpets and windows looking brand new." },
+  { name: "Noura Al-Saud", location: "As Sulimaniyah", photo: "/reviews/noura.jpg", text: "Booking directly on their website was seamless. They removed stains from my sofa that I thought were permanent. Thank you Velro!" },
+  { name: "Khalid Al-Sheri", location: "An Narjis", photo: "/reviews/khalid.jpg", text: "Really impressive compared to other companies I've tried. They came exactly on time, brought premium supplies, and left the living room shining." },
+  { name: "Sara Al-Hassan", location: "Al Yasmin", photo: "/reviews/sara.jpg", text: "Exceptional service! They managed to clean tough stains in the kitchen that I struggled with for months. Will book a bi-weekly service now." },
 ];
 
 const row2Reviews = [
-  { name: "Abdullah Al-Ammar", location: "Ar Rabi", text: "Very convenient website and smooth service. The cleaners meticulously wiped down all my high shelves and ceiling fans without me even asking." },
-  { name: "Reem Al-Qahtani", location: "Al Sahafah", text: "Booking on the web took less than a minute. They deep-cleaned the entire apartment including inside the oven and fridge in record time." },
-  { name: "Faisal Al-Harbi", location: "Al Aqiq", text: "I highly recommend Velro. The cleaning staff paid attention to the smallest details, making sure the bathrooms were sanitized perfectly." },
-  { name: "Layla Al-Zahrani", location: "Al Malaz", text: "My go-to service for deep cleaning before hosting guests. They never disappoint, the floor polishing is excellent, and the house smells divine!" },
-  { name: "Omar Al-Shehri", location: "Al Murabba", text: "The process is straightforward. They vacuumed under all the heavy furniture and mopped beautifully. Safe, secure, and incredibly precise cleaning." },
-  { name: "Hessa Al-Ghamdi", location: "Al Olaya", text: "The best cleaning service I have used in Riyadh. Finally a reliable company that handles delicate dusting and tough bathroom grime with equal care." },
+  { name: "Abdullah Al-Ammar", location: "Ar Rabi", photo: "/reviews/abdullah.jpg", text: "Very convenient website and smooth service. The cleaners meticulously wiped down all my high shelves and ceiling fans without me even asking." },
+  { name: "Reem Al-Qahtani", location: "Al Sahafah", photo: "/reviews/reem.jpg", text: "Booking on the web took less than a minute. They deep-cleaned the entire apartment including inside the oven and fridge in record time." },
+  { name: "Faisal Al-Harbi", location: "Al Aqiq", photo: "/reviews/faisal.jpg", text: "I highly recommend Velro. The cleaning staff paid attention to the smallest details, making sure the bathrooms were sanitized perfectly." },
+  { name: "Layla Al-Zahrani", location: "Al Malaz", photo: "/reviews/layla.jpg", text: "My go-to service for deep cleaning before hosting guests. They never disappoint, the floor polishing is excellent, and the house smells divine!" },
+  { name: "Omar Al-Shehri", location: "Al Murabba", photo: "/reviews/omar.jpg", text: "The process is straightforward. They vacuumed under all the heavy furniture and mopped beautifully. Safe, secure, and incredibly precise cleaning." },
+  { name: "Hessa Al-Ghamdi", location: "Al Olaya", photo: "/reviews/hessa.jpg", text: "The best cleaning service I have used in Riyadh. Finally a reliable company that handles delicate dusting and tough bathroom grime with equal care." },
 ];
 
 const FLOATING_CIRCLES = [
@@ -169,10 +169,10 @@ export default function HomePage() {
 
             <div style={{ background: '#ffffff', border: '1px solid #e8eaff', borderRadius: '12px', padding: '10px 14px', display: 'inline-flex', alignItems: 'center', gap: '1.25rem', marginTop: '18px', animation: 'fadeInScale 0.6s ease-out 1.3s both' }}>
               <div style={{ display: 'flex', position: 'relative', width: '130px', height: '48px' }}>
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', position: 'absolute', left: 0, background: '#eef0ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', fontWeight: 700, color: '#3b4fd8' }}>F</div>
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', position: 'absolute', left: '30px', zIndex: 1, background: '#e0e7ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', fontWeight: 700, color: '#3b4fd8' }}>T</div>
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', position: 'absolute', left: '60px', zIndex: 2, background: '#eef0ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', fontWeight: 700, color: '#3b4fd8' }}>N</div>
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', backgroundColor: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', left: '90px', zIndex: 3, fontSize: '0.875rem', fontWeight: 800 }}>5k+</div>
+                <img src="/reviews/fatima.jpg" alt="Fatima" style={{ width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', position: 'absolute', left: 0, objectFit: 'cover' }} />
+                <img src="/reviews/tariq.jpg" alt="Tariq" style={{ width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', position: 'absolute', left: '30px', zIndex: 1, objectFit: 'cover' }} />
+                <img src="/reviews/noura.jpg" alt="Noura" style={{ width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', position: 'absolute', left: '60px', zIndex: 2, objectFit: 'cover' }} />
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', backgroundColor: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', left: '90px', zIndex: 3, fontSize: '0.875rem', fontWeight: 800 }}>500+</div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', gap: '2px', marginBottom: '4px' }}>
@@ -526,9 +526,7 @@ export default function HomePage() {
                 <div key={i} className="review-card">
                   <div className="quote-icon">"</div>
                   <div className="review-author">
-                    <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#eef0ff', border: '2px solid #dde0ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', fontWeight: 700, color: '#3b4fd8', flexShrink: 0 }}>
-                      {review.name.charAt(0)}
-                    </div>
+                    <img src={review.photo} alt={review.name} style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #dde0ff', objectFit: 'cover', flexShrink: 0 }} />
                     <div className="review-info">
                       <h4>{review.name}</h4>
                       <span>{review.location}</span>
@@ -543,9 +541,7 @@ export default function HomePage() {
                 <div key={i} className="review-card">
                   <div className="quote-icon">"</div>
                   <div className="review-author">
-                    <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#eef0ff', border: '2px solid #dde0ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', fontWeight: 700, color: '#3b4fd8', flexShrink: 0 }}>
-                      {review.name.charAt(0)}
-                    </div>
+                    <img src={review.photo} alt={review.name} style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #dde0ff', objectFit: 'cover', flexShrink: 0 }} />
                     <div className="review-info">
                       <h4>{review.name}</h4>
                       <span>{review.location}</span>

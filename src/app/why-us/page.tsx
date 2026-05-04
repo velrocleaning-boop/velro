@@ -92,7 +92,7 @@ export default function WhyUs() {
           </p>
           <div style={{ marginTop: '3rem', display: 'flex', justifyContent: 'center', gap: '3rem', flexWrap: 'wrap' }}>
             <div>
-              <div style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary)' }}>5,000+</div>
+              <div style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary)' }}>500+</div>
               <div style={{ opacity: 0.7 }}>{t('whyus.stat1_label')}</div>
             </div>
             <div>

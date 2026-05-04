@@ -12,7 +12,7 @@ export default function AboutContent() {
   const ar = lang === 'ar';
 
   const stats = [
-    { value: "5,000+", label: t('about.stat1') },
+    { value: "500+", label: t('about.stat1') },
     { value: "4.9★",  label: t('about.stat2') },
     { value: "100%",  label: t('about.stat3') },
     { value: "50+",   label: t('about.stat4') },

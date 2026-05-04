@@ -99,7 +99,7 @@ export default function LocationPage() {
       {/* FOOTER CTA */}
       <section style={{ padding: '6rem 1rem', backgroundColor: '#111827', color: 'white', textAlign: 'center' }}>
         <div className="container">
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1.5rem' }}>Join 5,000+ Happy Riyadh Homes</h2>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1.5rem' }}>Join 500+ Happy Riyadh Homes</h2>
           <p style={{ fontSize: '1.25rem', opacity: 0.8, marginBottom: '3rem' }}>Experience the most reliable cleaning service in {location.name}.</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
              <Link href="/" style={{ border: '2px solid white', color: 'white', padding: '1rem 2.5rem', borderRadius: '3rem', fontWeight: 700, textDecoration: 'none' }}>Back to Home</Link>
