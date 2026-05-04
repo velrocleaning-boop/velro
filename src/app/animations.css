@@ -1,8 +1,19 @@
-@media (prefers-reduced-motion: reduce) { 
-  * { 
-    animation: none !important; 
-    transition: none !important; 
-  } 
+.testimonial-col-md { display: none; }
+.testimonial-col-lg { display: none; }
+@media (min-width: 768px) { .testimonial-col-md { display: block; } }
+@media (min-width: 1024px) { .testimonial-col-lg { display: block; } }
+
+@keyframes scrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.testimonial-scroll { animation: scrollUp linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* Observer utility */

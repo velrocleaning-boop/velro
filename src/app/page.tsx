@@ -6,6 +6,7 @@ import { HelpCircle, Plus, Minus, X, Menu, CheckCircle2, MapPin, Star, ShieldChe
 import "./animations.css";
 import { useScrollAnimations } from "@/hooks/useAnimations";
 import { useTranslation } from "@/hooks/useTranslation";
+import { TestimonialsColumn } from "@/components/ui/testimonials-columns";
 
 const saudiBrands = [
   { name: "KINGDOM HOSPITAL", color: "#2d6639", Icon: Activity },
@@ -514,42 +515,38 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* REVIEWS SECTION */}
-        <section className="reviews-section">
-          <div className="reviews-header">
-            <h2>{t('reviews.title')}</h2>
-            <p>{t('reviews.subtitle')}</p>
-          </div>
-          <div className="marquee-wrapper">
-            <div className="marquee-row left">
-              {[...row1Reviews, ...row1Reviews].map((review, i) => (
-                <div key={i} className="review-card">
-                  <div className="quote-icon">"</div>
-                  <div className="review-author">
-                    <img src={review.photo} alt={review.name} style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #dde0ff', objectFit: 'cover', flexShrink: 0 }} />
-                    <div className="review-info">
-                      <h4>{review.name}</h4>
-                      <span>{review.location}</span>
-                    </div>
-                  </div>
-                  <div className="review-text">{review.text}</div>
+        {/* TESTIMONIALS COLUMNS SECTION */}
+        <section style={{ backgroundColor: '#ffffff', padding: '5rem 1rem', overflow: 'hidden' }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', maxWidth: '540px', margin: '0 auto 3rem auto' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                <div style={{ border: '1px solid #d1d5db', padding: '4px 16px', borderRadius: '8px', fontSize: '0.875rem', color: '#111827', fontWeight: 500 }}>
+                  Testimonials
                 </div>
-              ))}
+              </div>
+              <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 800, color: '#111827', letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '1.25rem' }}>
+                What our customers say
+              </h2>
+              <p style={{ color: '#6b7280', fontSize: '1rem', lineHeight: 1.6, margin: 0 }}>
+                See what our customers have to say about Velro Cleaning.
+              </p>
             </div>
-            <div className="marquee-row right">
-              {[...row2Reviews, ...row2Reviews].map((review, i) => (
-                <div key={i} className="review-card">
-                  <div className="quote-icon">"</div>
-                  <div className="review-author">
-                    <img src={review.photo} alt={review.name} style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #dde0ff', objectFit: 'cover', flexShrink: 0 }} />
-                    <div className="review-info">
-                      <h4>{review.name}</h4>
-                      <span>{review.location}</span>
-                    </div>
-                  </div>
-                  <div className="review-text">{review.text}</div>
-                </div>
-              ))}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', maxHeight: '740px', overflow: 'hidden', maskImage: 'linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)', WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)' }}>
+              <TestimonialsColumn duration={15} testimonials={[
+                { text: row1Reviews[0].text, image: row1Reviews[0].photo, name: row1Reviews[0].name, role: row1Reviews[0].location },
+                { text: row1Reviews[1].text, image: row1Reviews[1].photo, name: row1Reviews[1].name, role: row1Reviews[1].location },
+                { text: row1Reviews[2].text, image: row1Reviews[2].photo, name: row1Reviews[2].name, role: row1Reviews[2].location },
+              ]} />
+              <TestimonialsColumn duration={19} className="testimonial-col-md" testimonials={[
+                { text: row1Reviews[3].text, image: row1Reviews[3].photo, name: row1Reviews[3].name, role: row1Reviews[3].location },
+                { text: row2Reviews[0].text, image: row2Reviews[0].photo, name: row2Reviews[0].name, role: row2Reviews[0].location },
+                { text: row2Reviews[1].text, image: row2Reviews[1].photo, name: row2Reviews[1].name, role: row2Reviews[1].location },
+              ]} />
+              <TestimonialsColumn duration={17} className="testimonial-col-lg" testimonials={[
+                { text: row2Reviews[2].text, image: row2Reviews[2].photo, name: row2Reviews[2].name, role: row2Reviews[2].location },
+                { text: row2Reviews[3].text, image: row2Reviews[3].photo, name: row2Reviews[3].name, role: row2Reviews[3].location },
+                { text: row2Reviews[4].text, image: row2Reviews[4].photo, name: row2Reviews[4].name, role: row2Reviews[4].location },
+              ]} />
             </div>
           </div>
         </section>
