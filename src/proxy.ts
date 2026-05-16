@@ -29,7 +29,7 @@ function hasRole(userRole: string, minRole: string): boolean {
   return (ROLE_HIERARCHY[userRole] ?? 0) >= (ROLE_HIERARCHY[minRole] ?? 0);
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const url = request.nextUrl.pathname;
 
   // ─── Admin UI protection ──────────────────────────────────────────────────
